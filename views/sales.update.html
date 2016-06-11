@@ -1,0 +1,434 @@
+<div id="header" ng-include="'/assets/admin/views/common/header.html'"></div>
+<aside id="menu" ng-include="'/assets/admin/views/common/navigation.html'"></aside>
+
+<div id="wrapper" class="animate-panel" data-effect="zomeIn">
+
+  <div class="content">
+
+	<div class="row">
+	  <div class="col-lg-12 text-center m-t-md">
+		<h2>
+      <span translate>SALE_UPDATE_SECTION_TITLE</span>
+		</h2>
+		<p>
+			{{ currentSale.data.data.ru.title }}
+		</p>
+	  </div>
+	</div>
+	<div class="row">
+	  <div class="col-lg-12">
+		<div class="hpanel" ng-controller="SaleUpdateCtrl">
+		  <ul class="nav nav-tabs">
+        <li ng-click="TabManager.update($event)" ng-class="{ active: TabManager.state == '#tab-params' }">
+          <a data-toggle="tab" href="#tab-params" aria-expanded="false">
+            <span translate>
+              SALE_UPDATE_TAB_MAIN_PARAMETERS
+            </span>
+          </a>
+        </li>
+  			<li ng-click="TabManager.update($event)" ng-class="{ active: TabManager.state == '#tab-description' }">
+  			  <a data-toggle="tab" href="#tab-description" aria-expanded="true">
+            <span translate>
+              SALE_UPDATE_TAB_DESCRIPTION
+            </span>
+          </a>
+  			</li>
+        <li ng-click="TabManager.update($event)" ng-class="{ active: TabManager.state == '#tab-goods-in-sales' }">
+          <a data-toggle="tab" href="#tab-goods-in-sales" aria-expanded="true">
+            <span translate>
+              Товары в акции
+            </span>
+          </a>
+        </li>
+
+			<div class="btn-group" ng-show="TabManager.state == '#tab-description' || TabManager.state == '#tab-seo'">
+
+			  <button type="button" class="btn btn-sm"
+				ng-class="{ 'btn-info': TabLangManager.ru, 'btn-default': !TabLangManager.ru }"
+				ng-click="TabLangManager.update($event)">RU</button>
+
+			  <button type="button" class="btn btn-sm"
+				ng-class="{ 'btn-info': TabLangManager.uk, 'btn-default': !TabLangManager.uk }"
+				ng-click="TabLangManager.update($event)">UK</button>
+
+			  <button type="button" class="btn btn-sm"
+				ng-class="{ 'btn-info': TabLangManager.en, 'btn-default': !TabLangManager.en }"
+				ng-click="TabLangManager.update($event)">EN</button>
+			</div>
+
+		  </ul>
+
+	  <div class="tab-content">
+      <div id="#tab-params" class="tab-pane" ng-class="{ active: TabManager.state == '#tab-params' }">
+        <div class="panel-body">
+          <form class="form-horizontal">
+
+            <div class="hr-line-dashed"></div>
+
+            <div class="form-group">
+              <label for="titlecolorbackgrnd-{{lang}}-element" class="col-sm-2 control-label font-normal">
+                <span translate>
+                  SALE_UPDATE_COLOR
+                </span>
+              </label>
+    		        <div class="col-sm-10">
+                <input colorpicker type="text" ng-model="titlecolorbackgrnd" ng-change="onColorChange(titlecolorbackgrnd)" class="form-control" />
+               </div>
+            </div>
+
+            <div class="hr-line-dashed"></div>
+            <div class="form-group">
+              <div class="col-sm-8 col-sm-offset-2">
+                <button type="button" class="btn btn-default"
+                ng-click="SaleUpdateManager.save()"
+                ng-disabled="Validation.errorStack.length || !Validation.changes">
+                  <span translate>
+                    SALE_UPDATE_BUTTON_SAVE
+                  </span>
+                </button>
+                &nbsp;
+                  <a href="/admin/sales" class="btn btn-default">
+                    <span translate>
+                      SALE_UPDATE_BUTTON_CANCEL
+                    </span>
+                  </a>
+              </div>
+            </div>
+
+          </form>
+        </div>
+      </div>
+
+			<div id="#tab-description" class="tab-pane" ng-class="{ active: TabManager.state == '#tab-description' }">
+			  <div class="panel-body">
+				<form method="get" class="form-horizontal" ng-repeat="lang in TabLangManager.langList | capitalize" ng-show="TabLangManager['{{ lang | lowercase }}']">
+
+				  <div class="form-group">
+					<label for="title-{{lang}}-element" class="col-sm-2 control-label font-normal">
+            <span translate>
+              SALE_UPDATE_TITLE
+            </span>
+          </label>
+					<div class="col-sm-10">
+					  <input type="text" class="form-control" id="title-{{lang}}-element"
+						ng-trim="false"
+						ng-class="{error: !!Validation['title' + lang].invalidMsg}"
+						ng-model="Validation['title' + lang].value"
+						ng-change="Validation['title' + lang].validate()">
+
+					  <span class="help-block m-b-none text-danger"
+						ng-show="!!Validation['title' + lang].invalidMsg"
+						ng-bind="Validation['title' + lang].invalidMsg">
+					  </span>
+					</div>
+				  </div>
+
+				  <div class="form-group">
+
+          </div>
+				  <div class="hr-line-dashed"></div>
+
+				  <div class="form-group">
+					<label for="description-{{lang}}-element" class="col-sm-2 control-label font-normal">
+            <span translate>
+              SALE_UPDATE_DESCRIPTION
+            </span>
+          </label>
+					<div class="col-sm-10">
+
+						<textarea class="form-control" id="text-{{lang}}-element"
+						ng-trim="false"
+						ng-class="{error: !!Validation['text' + lang].invalidMsg}"
+						ng-model="Validation['text' + lang].value"
+						ng-change="Validation['text' + lang].validate()">
+					  </textarea>
+
+					</div>
+				  </div>
+
+				  <div class="hr-line-dashed"></div>
+
+				  <div class="form-group">
+					<div class="col-sm-8 col-sm-offset-2">
+					  <button type="button" class="btn btn-default"
+						ng-click="SaleUpdateManager.save()"
+						ng-disabled="Validation.errorStack.length || !Validation.changes">
+              <span translate>
+                SALE_UPDATE_BUTTON_SAVE
+              </span>
+            </button>
+            &nbsp;
+              <a href="/admin/sales" class="btn btn-default">
+                <span translate>
+                  SALE_UPDATE_BUTTON_CANCEL
+                </span>
+              </a>
+					</div>
+				  </div>
+
+				</form>
+			  </div>
+			</div>
+
+      <div id="#tab-goods-in-sales" class="tab-pane" ng-class="{ active: TabManager.state == '#tab-goods-in-sales' }">
+        <div class="panel-body">
+          
+          <div class="row">
+
+          <div class="col-lg-6">
+            <div class="hpanel">
+              <div class="panel-heading hbuilt">
+                <span translate>
+                  SALE_UPDATE_TABLE_IN_SALE_TITLE
+                </span>
+              </div>
+              <div class="alert"
+              ng-show="SaleGoodsManager.message.inSale.show"
+              ng-class="{'alert-success': SaleGoodsManager.message.inSale.type == 'add' || SaleGoodsManager.message.inSale.type == 'remove', 'alert-danger': SaleGoodsManager.message.inSale.type == 'error'}">
+                <i class="fa" 
+                ng-class="{'fa-plus-circle': SaleGoodsManager.message.inSale.type == 'add', 'fa-minus-circle': SaleGoodsManager.message.inSale.type == 'remove', 'fa-exclamation-triangle': SaleGoodsManager.message.inSale.type == 'error'}"></i>
+                <span>
+                  {{ SaleGoodsManager.message.inSale.message }}
+                </span>
+              </div>
+              <div class="panel-body">
+
+                <div class="row">
+                  <div class="col-sm-12">
+                    <form class="form-horizontal">
+                      <div class="form-group">
+                        <label for="category-element" class="col-sm-2 font-normal">
+                          <span translate>
+                            GOODS_LIST_SELECTBOX_CATEGORY
+                          </span>
+                        </label>
+                        <div class="col-sm-12">
+
+                          <ui-select 
+                          ng-model="SaleGoodsManager.select.inSale.categories.model" 
+                          ng-change="SaleGoodsManager.select.inSale.categories.change()" 
+                          ng-disabled="SaleGoodsManager.select.inSale.categories.disabled"
+                          theme="bootstrap">
+                            
+                            <ui-select-match placeholder="{{::translations.GOODS_LIST_SELECTBOX_CATEGORY_PLACEHOLDER}}">
+                              {{$select.selected.name}}
+                            </ui-select-match>
+                            
+                            <ui-select-choices repeat="category in SaleGoodsManager.select.inSale.categories.list | propsFilter: {name: $select.search}">
+                              <div ng-bind-html="category.name" class="font-bold"></div>
+                              <div ng-bind-html="category.path"></div>
+                            </ui-select-choices>
+
+                          </ui-select>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                  <div class="col-sm-12">
+                    <form class="form-horizontal">
+                      <div class="form-group">
+                        <label for="manufacturer-element" class="col-sm-2 font-normal">
+                          <span translate>
+                            GOODS_LIST_SELECTBOX_MANUFACTURER
+                          </span>
+                        </label>
+                        <div class="col-sm-12">
+
+                          <ui-select 
+                          ng-model="SaleGoodsManager.select.inSale.manufacturers.model" 
+                          ng-change="SaleGoodsManager.select.inSale.manufacturers.change()" 
+                          ng-disabled="SaleGoodsManager.select.inSale.manufacturers.disabled"
+                          theme="bootstrap">
+                            
+                            <ui-select-match placeholder="{{::translations.GOODS_LIST_SELECTBOX_MANUFACTURER_PLACEHOLDER}}">
+                              {{$select.selected.name}}
+                            </ui-select-match>
+                            
+                            <ui-select-choices repeat="manufacturer in SaleGoodsManager.select.inSale.manufacturers.list | propsFilter: {name: $select.search}">
+                              <div ng-bind-html="manufacturer.name"></div>
+                            </ui-select-choices>
+
+                          </ui-select>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+                
+                <div class="row">
+                  <div class="col-sm-12">
+                    <form class="form-horizontal">
+                      <div class="form-group">
+                        <label for="cost-element" class="col-sm-12 font-normal">
+                          <span translate>
+                              GOODS_LIST_COST
+                          </span>
+                        </label>
+                        <div class="col-sm-6">
+                          <input type="text" class="form-control" placeholder="{{::translations.GOODS_LIST_COST_FROM_PLACEHOLDER}}"
+                            ng-model="SaleGoodsManager.cost.inSale.from.model" 
+                            ng-change="SaleGoodsManager.cost.inSale.from.change()">
+                        </div>
+                        <div class="col-sm-6">
+                          <input type="text" class="form-control" placeholder="{{::translations.GOODS_LIST_COST_TO_PLACEHOLDER}}"
+                            ng-model="SaleGoodsManager.cost.inSale.to.model" 
+                            ng-change="SaleGoodsManager.cost.inSale.to.change()">
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+
+                <table datatable id="inSale" class="table table-striped" 
+                  dt-options="SaleGoodsManager.datatable.inSale.options" 
+                  dt-columns="SaleGoodsManager.datatable.inSale.columns" 
+                  dt-instance="SaleGoodsManager.datatable.inSale.instance">
+                </table>
+
+              </div>
+              <div class="panel-footer">
+                <button type="button" class="btn btn-default btn-sm"
+                ng-click="SaleGoodsManager.action.removeGoods()" 
+                ng-disabled="SaleGoodsManager.datatable.inSale.itemsSelected.length == 0">
+                  <i class="fa fa-minus-circle"></i>
+                  <span class="bold">
+                    <span translate>
+                      SALE_UPDATE_BUTTON_DELETE_FROM_SALE
+                    </span>
+                  </span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6">
+            <div class="hpanel">
+              <div class="panel-heading hbuilt">
+                <span translate>
+                  SALE_UPDATE_TABLE_NOT_IN_SALE_TITLE
+                </span>
+              </div>
+              <div class="panel-body">
+
+                <div class="row">
+                  <div class="col-sm-12">
+                    <form class="form-horizontal">
+                      <div class="form-group">
+                        <label for="category-element" class="col-sm-2 font-normal">
+                          <span translate>
+                            GOODS_LIST_SELECTBOX_CATEGORY
+                          </span>
+                        </label>
+                        <div class="col-sm-12">
+
+                          <ui-select 
+                          ng-model="SaleGoodsManager.select.notInSale.categories.model" 
+                          ng-change="SaleGoodsManager.select.notInSale.categories.change()" 
+                          ng-disabled="SaleGoodsManager.select.notInSale.categories.disabled"
+                          theme="bootstrap">
+                            
+                            <ui-select-match placeholder="{{::translations.GOODS_LIST_SELECTBOX_CATEGORY_PLACEHOLDER}}">
+                              {{$select.selected.name}}
+                            </ui-select-match>
+                            
+                            <ui-select-choices repeat="category in SaleGoodsManager.select.notInSale.categories.list | propsFilter: {name: $select.search}">
+                              <div ng-bind-html="category.name" class="font-bold"></div>
+                              <div ng-bind-html="category.path"></div>
+                            </ui-select-choices>
+
+                          </ui-select>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                  <div class="col-sm-12">
+                    <form class="form-horizontal">
+                      <div class="form-group">
+                        <label for="manufacturer-element" class="col-sm-2 font-normal">
+                          <span translate>
+                            GOODS_LIST_SELECTBOX_MANUFACTURER
+                          </span>
+                        </label>
+                        <div class="col-sm-12">
+
+                          <ui-select 
+                          ng-model="SaleGoodsManager.select.notInSale.manufacturers.model"
+                          ng-change="SaleGoodsManager.select.notInSale.manufacturers.change()" 
+                          ng-disabled="SaleGoodsManager.select.notInSale.manufacturers.disabled"
+                          theme="bootstrap">
+                            
+                            <ui-select-match placeholder="{{::translations.GOODS_LIST_SELECTBOX_MANUFACTURER_PLACEHOLDER}}">
+                              {{$select.selected.name}}
+                            </ui-select-match>
+                            
+                            <ui-select-choices repeat="manufacturer in SaleGoodsManager.select.notInSale.manufacturers.list | propsFilter: {name: $select.search}">
+                              <div ng-bind-html="manufacturer.name"></div>
+                            </ui-select-choices>
+
+                          </ui-select>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-sm-12">
+                    <form class="form-horizontal">
+                      <div class="form-group">
+                        <label for="cost-element" class="col-sm-12 font-normal">
+                          <span translate>
+                              GOODS_LIST_COST
+                          </span>
+                        </label>
+                        <div class="col-sm-6">
+                          <input type="text" class="form-control" placeholder="{{::translations.GOODS_LIST_COST_FROM_PLACEHOLDER}}"
+                            ng-model="SaleGoodsManager.cost.notInSale.from.model" 
+                            ng-change="SaleGoodsManager.cost.notInSale.from.change()">
+                        </div>
+                        <div class="col-sm-6">
+                          <input type="text" class="form-control" placeholder="{{::translations.GOODS_LIST_COST_TO_PLACEHOLDER}}"
+                            ng-model="SaleGoodsManager.cost.notInSale.to.model" 
+                            ng-change="SaleGoodsManager.cost.notInSale.to.change()">
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+
+                <table datatable id="notInSale" class="table table-striped" 
+                  dt-options="SaleGoodsManager.datatable.notInSale.options" 
+                  dt-columns="SaleGoodsManager.datatable.notInSale.columns" 
+                  dt-instance="SaleGoodsManager.datatable.notInSale.instance">
+                </table>
+
+              </div>
+              <div class="panel-footer">
+                <button type="button" class="btn btn-default btn-sm"
+                ng-click="SaleGoodsManager.action.addGoods()"
+                ng-disabled="SaleGoodsManager.datatable.notInSale.itemsSelected.length == 0">
+                  <i class="fa fa-plus-circle"></i>
+                  <span class="bold">
+                    <span translate>
+                      SALE_UPDATE_BUTTON_ADD_TO_SALE
+                    </span>
+                  </span>
+                </button>
+              </div>
+            </div>
+          </div>
+          </div>  
+
+        </div>
+      </div>
+
+		</div>
+
+		</div>
+	  </div>
+	</div>
+  </div>
+
+  <footer class="footer" ng-include="'/assets/admin/views/common/footer.html'"></footer>
+
+</div>

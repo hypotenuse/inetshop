@@ -1,0 +1,210 @@
+<div id="header" ng-include="'/assets/admin/views/common/header.html'"></div>
+<aside id="menu" ng-include="'/assets/admin/views/common/navigation.html'"></aside>
+<div id="wrapper" ng-controller="RawgoodsCtrl as showCase">
+   <div class="content" animate-panel effect="zoomIn">
+     <div class="row">
+        <div class="col-lg-12 text-center m-t-md">
+           <h2>
+              <span translate>
+              SIDEBAR_RAWGOODS
+              </span>
+           </h2>
+        </div>
+        <div class="col-lg-6 m-t-md">
+          <div class="row">
+            <div class="col-sm-8">
+              <label for="suppliers-element" class="font-normal">
+                <span translate>
+                  SUPPLIERS
+                </span>:
+              </label>
+              <form class="form-horizontal">
+                <ui-select
+                ng-model="selectSuppliers.suppliers.model"
+                ng-change="selectSuppliers.suppliers.change()"
+                ng-disabled="selectSuppliers.suppliers.disabled"
+                theme="bootstrap">
+
+                  <ui-select-match placeholder="{{::translations.GOODS_LIST_SELECTBOX_MANUFACTURER_PLACEHOLDER}}">
+                    {{$select.selected.name}}
+                  </ui-select-match>
+
+                  <ui-select-choices repeat="supplier in selectSuppliers.suppliers.list  | propsFilter: {name: $select.search}">
+                    <div ng-bind-html="supplier.name"></div>
+                  </ui-select-choices>
+
+                </ui-select>
+              </form>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="row">
+                <label class="control-label font-normal">
+                </label>
+              </div>
+              <table id="listSuppliersTable" class="table">
+                <thead>
+                  <tr>
+                    <th width="70%"><div class="stats-title pull-left"><h4><span translate>NAME_PRICE</span></h4></th>
+                    <th width="30%"><div class="stats-title pull-left"><h4><span translate>BRAND</span></h4></th>
+                  </tr>
+                </thead>
+              </table>
+            </div>
+          </div>
+          <div class="row">
+            <span ng-show="detail">
+              <h3 translate>DETAIL</h3>
+              <div class="form-group col-lg-12 m-t-md">
+                <label class="control-label font-normal">
+                  <span translate>
+                    NAME_PRICE
+                  </span>
+                </label>
+                <div>
+                  <input type="text" class="form-control"
+                    ng-readonly="true"
+                    ng-model="detail.title">
+                </div>
+              </div>
+              <div class="form-group col-lg-6 m-t-md">
+                <label class="control-label font-normal">
+                  <span translate>
+                    PART_NUMBER
+                  </span>
+                </label>
+                <div>
+                  <input type="text" class="form-control"
+                    ng-readonly="true"
+                    ng-model="detail.partnumber">
+                </div>
+              </div>
+              <div class="form-group col-lg-6 m-t-md">
+                <label class="control-label font-normal">
+                  <span translate>
+                    MODEL
+                  </span>
+                </label>
+                <div>
+                  <input type="text" class="form-control"
+                    ng-readonly="true"
+                    ng-model="detail.model">
+                </div>
+              </div>
+              <div class="form-group col-lg-6 m-t-md">
+                <label class="control-label font-normal">
+                  <span translate>
+                    BRAND
+                  </span>
+                </label>
+                <div>
+                  <input type="text" class="form-control"
+                    ng-readonly="true"
+                    ng-model="detail.brand">
+                </div>
+              </div>
+              <div class="form-group col-lg-6 m-t-md">
+                <label class="control-label font-normal">
+                  <span translate>
+                    CATEGORY
+                  </span>
+                </label>
+                <div>
+                  <input type="text" class="form-control"
+                    ng-readonly="true"
+                    ng-model="detail.category">
+                </div>
+              </div>
+              <div class="form-group col-lg-12 m-t-md">
+                <label class="control-label font-normal">
+                  <span translate>
+                    DESCRIPTION
+                  </span>
+                </label>
+                <div>
+                  <textarea class="form-control" ng-readonly="true" ng-model="detail.description"></textarea>
+                </div>
+              </div>
+            </span>
+          </div>
+        </div>
+        <div class="col-lg-6 m-t-md">
+          <div class="row">
+            <div class="col-sm-6">
+              <form class="form-horizontal">
+                <div class="form-group">
+                  <label for="manufacturer-element" class="col-sm-2 font-normal">
+                    <span translate>
+                      GOODS_LIST_SELECTBOX_MANUFACTURER
+                    </span>:
+                  </label>
+                  <div class="col-sm-12">
+
+                    <ui-select
+                    ng-model="selectGoods.manufacturers.model"
+                    ng-change="selectGoods.manufacturers.change()"
+                    ng-disabled="selectGoods.manufacturers.disabled"
+                    theme="bootstrap">
+
+                      <ui-select-match placeholder="{{::translations.GOODS_LIST_SELECTBOX_MANUFACTURER_PLACEHOLDER}}">
+                        {{$select.selected.name}}
+                      </ui-select-match>
+
+                      <ui-select-choices repeat="manufacturer in selectGoods.manufacturers.list | propsFilter: {name: $select.search}">
+                        <div ng-bind-html="manufacturer.name"></div>
+                      </ui-select-choices>
+
+                    </ui-select>
+                  </div>
+                </div>
+              </form>
+            </div>
+
+            <div class="col-sm-6">
+              <form class="form-horizontal">
+                <div class="form-group">
+                  <label for="category-element" class="col-sm-2 font-normal">
+                    <span translate>
+                      GOODS_LIST_SELECTBOX_CATEGORY
+                    </span>:
+                  </label>
+                  <div class="col-sm-12">
+
+                    <ui-select
+                    ng-model="selectGoods.categories.model"
+                    ng-change="selectGoods.categories.change()"
+                    ng-disabled="selectGoods.categories.disabled"
+                    theme="bootstrap">
+
+                      <ui-select-match placeholder="{{::translations.GOODS_LIST_SELECTBOX_CATEGORY_PLACEHOLDER}}">
+                        {{$select.selected.name}}
+                      </ui-select-match>
+
+                      <ui-select-choices repeat="category in selectGoods.categories.list | propsFilter: {name: $select.search}">
+                        <div ng-bind-html="category.name" class="font-bold"></div>
+                        <div ng-bind-html="category.path"></div>
+                      </ui-select-choices>
+
+                    </ui-select>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <table id="listGoodsTable" class="table table-striped">
+            <thead>
+              <tr>
+                <th><div class="stats-title pull-left"><h4><span translate>GOODS_IN_DATABASE</span></h4></th>
+                <th><div class="stats-title pull-left"><h4><span translate>BRAND</span></h4></th>
+                <th><div class="stats-title pull-left"><h4><span translate>PART_NUMBER</span></h4></th>
+                <th><div class="stats-title pull-left"><h4><span translate>CONNECTION</span></h4></th>
+              </tr>
+            </thead>
+          </table>
+        </div>
+     </div>
+	 </div>
+   <footer class="footer" ng-include="'/assets/admin/views/common/footer.html'"></footer>
+</div>

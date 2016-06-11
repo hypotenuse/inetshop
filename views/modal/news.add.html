@@ -1,0 +1,46 @@
+<div class="inmodal">
+
+	<div class="modal-header">
+		<h4 class="modal-title">
+			<span translate>
+				NEWS_MODAL_ADD_TITLE
+			</span>
+		</h4>
+	</div>
+
+	<div class="modal-body">
+		<form class="form-horizontal">
+			<div class="form-group">
+				<label class="col-sm-2 control-label font-normal">
+					<span translate>
+						NEWS_MODAL_ADD_CATEGORY_TITLE
+					</span>
+				</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control"
+						ng-trim="false"
+						ng-class="{error: !!Validation.invalidMsg}"
+						ng-model="Validation.value"
+						ng-change="Validation.validate()">
+					<span class="help-block m-b-none text-danger" ng-show="!!Validation.invalidMsg">
+						{{ Validation.invalidMsg }}
+					</span>
+				</div>
+			</div>
+		</form>
+	</div>
+
+	<div class="modal-footer">
+		<button type="button" class="btn btn-default" ng-click="modalManager.cancel()">
+			<span translate>
+				CATEGORIES_MODAL_ADD_BUTTON_CANCEL
+			</span>
+		</button>
+		<button type="button" class="btn btn-default" ng-click="modalManager.ok()" ng-disabled="!!Validation.invalidMsg">
+			<span translate>
+				CATEGORIES_MODAL_ADD_BUTTON_SAVE
+			</span>
+		</button>
+	</div>
+
+</div>

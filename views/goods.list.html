@@ -1,0 +1,176 @@
+
+
+<div id="header" ng-include="'/assets/admin/views/common/header.html'"></div>
+<aside id="menu" ng-include="'/assets/admin/views/common/navigation.html'"></aside>
+
+<div id="wrapper">
+
+	<div class="content" animate-panel effect="zoomIn">
+
+		<div class="row">
+			<div class="col-lg-12 text-center m-t-md">
+				<h2>
+					<span translate>GOODS_TITLE</span>
+				</h2>
+				<p>
+					<span translate>GOODS_SUBTITLE</span>
+				</p>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="hpanel" ng-controller="GoodsCtrl as GC">
+					<div class="panel-heading">
+						<span translate>GOODS_LIST_TITLE</span>
+					</div>
+					<div class="panel-body list">
+
+						<div class="row">
+							<div class="col-sm-6">
+								<form class="form-horizontal">
+									<div class="form-group">
+										<label for="manufacturer-element" class="col-sm-2 font-normal">
+											<span translate>
+												GOODS_LIST_SELECTBOX_MANUFACTURER
+											</span>
+										</label>
+										<div class="col-sm-12">
+
+											<ui-select
+											ng-model="select.manufacturers.model"
+											ng-change="select.manufacturers.change()"
+											ng-disabled="select.manufacturers.disabled"
+											theme="bootstrap">
+
+												<ui-select-match placeholder="{{::translations.GOODS_LIST_SELECTBOX_MANUFACTURER_PLACEHOLDER}}">
+													{{$select.selected.name}}
+												</ui-select-match>
+
+												<ui-select-choices repeat="manufacturer in select.manufacturers.list | propsFilter: {name: $select.search}">
+													<div ng-bind-html="manufacturer.name"></div>
+												</ui-select-choices>
+
+											</ui-select>
+										</div>
+									</div>
+								</form>
+							</div>
+
+							<div class="col-sm-6">
+								<form class="form-horizontal">
+									<div class="form-group">
+										<label for="category-element" class="col-sm-2 font-normal">
+											<span translate>
+												GOODS_LIST_SELECTBOX_CATEGORY
+											</span>
+										</label>
+										<div class="col-sm-12">
+
+											<ui-select
+											ng-model="select.categories.model"
+											ng-change="select.categories.change()"
+											ng-disabled="select.categories.disabled"
+											theme="bootstrap">
+
+												<ui-select-match placeholder="{{::translations.GOODS_LIST_SELECTBOX_CATEGORY_PLACEHOLDER}}">
+													{{$select.selected.name}}
+												</ui-select-match>
+
+												<ui-select-choices repeat="category in select.categories.list | propsFilter: {name: $select.search}">
+													<div ng-bind-html="category.name" class="font-bold"></div>
+													<div ng-bind-html="category.path"></div>
+												</ui-select-choices>
+
+											</ui-select>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-sm-6">
+								<form class="form-horizontal">
+									<div class="form-group">
+										<label for="cost-element" class="col-sm-12 font-normal">
+											<span translate>
+													GOODS_LIST_COST
+											</span>
+										</label>
+										<div class="col-sm-6">
+											<input type="text" class="form-control" id="costfrom-element" placeholder="{{::translations.GOODS_LIST_COST_FROM_PLACEHOLDER}}"
+												ng-model="cost.from.model"
+												ng-change="cost.from.change()">
+										</div>
+										<div class="col-sm-6">
+											<input type="text" class="form-control" id="costto-element" placeholder="{{::translations.GOODS_LIST_COST_TO_PLACEHOLDER}}"
+												ng-model="cost.to.model"
+												ng-change="cost.to.change()">
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+
+						<div class="project-list">
+							<table id="foobar" datatable dt-options="GC.dtOptions" dt-columns="GC.dtColumns" dt-instance="GC.dtInstance" class="table table-striped">
+							</table>
+						</div>
+
+						<div class="row">
+
+							<div class="col-sm-6">
+								<h4>
+									<span translate>
+										GOODS_LIST_FORMULA_HEADER
+									</span>
+								</h4>
+							</div>
+							<div class="col-sm-6 text-right">
+								<br/>
+								<button class="btn btn-default btn-sm" type="button" ng-click="GC.goodsManager.add()">
+									<i class="fa fa-plus"></i>
+									<span class="bold" translate>GOODS_LIST_BUTTON_ADD</span>
+								</button>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-12">
+								<form class="form-horizontal">
+									<div class="form-group">
+
+										<label for="formula-element" class="col-sm-12 font-normal">
+											<span translate>
+													GOODS_LIST_FORMULA_LABEL
+											</span>
+										</label>
+
+										<div class="col-sm-7">
+											<input type="text" class="form-control" id="formula-element"
+												ng-model="formula.model"
+												ng-change="formula.change()">
+											<span class="help-block m-b-none text-danger" ng-show="!!formula.invalidMsg">{{ formula.invalidMsg }}</span>
+										</div>
+
+										<div class="col-sm-1">
+											<button type="button" class="btn btn-default"
+											ng-click="GC.goodsManager.recalculate()"
+											ng-disabled="formula.disabled">
+												<span>
+													{{ formula.recalculateButtonText }}
+												</span>
+											</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<footer class="footer" ng-include="'/assets/admin/views/common/footer.html'"></footer>
+
+</div>

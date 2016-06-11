@@ -1,0 +1,541 @@
+
+
+<div id="header" ng-include="'/assets/admin/views/common/header.html'"></div>
+<aside id="menu" ng-include="'/assets/admin/views/common/navigation.html'"></aside>
+
+<div id="wrapper" class="animate-panel" data-effect="zomeIn">
+
+	<div class="content">
+
+		<div class="row">
+			<div class="col-lg-12 text-center m-t-md">
+				<h2>
+					<span translate>GOOD_UPDATE_SECTION_TITLE</span>
+				</h2>
+				<p>
+					{{ goodData.data.data.ru.title }}
+				</p>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="hpanel" ng-controller="GoodUpdateCtrl">
+					<ul class="nav nav-tabs">
+						<li ng-click="TabManager.update($event)" ng-class="{ active: TabManager.state == '#tab-params' }">
+							<a data-toggle="tab" href="#tab-params" aria-expanded="false">
+								<span translate>
+									GOOD_UPDATE_TAB_MAIN_PARAMETERS
+								</span>
+							</a>
+						</li>
+						<li ng-click="TabManager.update($event)" ng-class="{ active: TabManager.state == '#tab-description' }">
+							<a data-toggle="tab" href="#tab-description" aria-expanded="true">
+									<span translate>
+										GOOD_UPDATE_TAB_DESCRIPTION
+									</span>
+							</a>
+						</li>
+						<li ng-click="TabManager.update($event)" ng-class="{ active: TabManager.state == '#tab-seo' }">
+							<a data-toggle="tab" href="#tab-seo" aria-expanded="true">
+								<span translate>
+									GOOD_UPDATE_TAB_SEO
+								</span>
+							</a>
+						</li>
+						<li ng-click="TabManager.update($event)" ng-class="{ active: TabManager.state == '#tab-images' }">
+							<a data-toggle="tab" href="#tab-images" aria-expanded="true">
+								<span translate>
+									GOOD_UPDATE_TAB_PICTURES
+								</span>
+							</a>
+						</li>
+
+						<div class="btn-group" ng-show="TabManager.state == '#tab-description' || TabManager.state == '#tab-seo'">
+							
+							<button type="button" class="btn btn-sm"
+							ng-class="{ 'btn-info': TabLangManager.ru, 'btn-default': !TabLangManager.ru }"
+							ng-click="TabLangManager.update($event)">RU</button>
+
+							<button type="button" class="btn btn-sm"
+							ng-class="{ 'btn-info': TabLangManager.uk, 'btn-default': !TabLangManager.uk }"
+							ng-click="TabLangManager.update($event)">UK</button>
+							
+							<button type="button" class="btn btn-sm"
+							ng-class="{ 'btn-info': TabLangManager.en, 'btn-default': !TabLangManager.en }"
+							ng-click="TabLangManager.update($event)">EN</button>
+						</div>
+						
+					</ul>
+
+					<div class="tab-content">
+						<div id="#tab-params" class="tab-pane" ng-class="{ active: TabManager.state == '#tab-params' }">
+							<div class="panel-body">
+								<form class="form-horizontal">
+									
+									<div class="form-group">
+										<label for="slug-element" class="col-sm-2 control-label font-normal">
+											<span translate>
+												GOOD_UPDATE_SLUG
+											</span>
+										</label>
+										<div class="col-sm-10">
+											<input type="text" class="form-control" id="slug-element" 
+											ng-trim="false"
+											ng-class="{error: !!Validation.slug.invalidMsg}" 
+											ng-model="Validation.slug.value" 
+											ng-change="Validation.slug.validate()">
+											<span class="help-block m-b-none text-danger" ng-show="!!Validation.slug.invalidMsg">
+												{{ Validation.slug.invalidMsg }}
+											</span>
+										</div>
+									</div>
+									
+									<div class="hr-line-dashed"></div>
+
+									<div class="form-group">
+										<label for="partnumber-element" class="col-sm-2 control-label font-normal">
+											<span translate>
+												GOOD_UPDATE_PART_NUMBER
+											</span>
+										</label>
+										<div class="col-sm-10">
+											<input type="text" class="form-control" id="partnumber-element" 
+											ng-trim="false"
+											ng-class="{error: !!Validation.partnumber.invalidMsg}" 
+											ng-model="Validation.partnumber.value" 
+											ng-change="Validation.partnumber.validate()">
+											<span class="help-block m-b-none text-danger" ng-show="!!Validation.partnumber.invalidMsg">
+												{{ Validation.partnumber.invalidMsg }}
+											</span>
+										</div>
+									</div>
+
+									<div class="hr-line-dashed"></div>
+
+									<div class="form-group">
+										<label for="manufacturer-element" class="col-sm-2 control-label font-normal">
+											<span translate>
+												GOOD_UPDATE_SELECTBOX_MANUFACTURER
+											</span>
+										</label>
+										<div class="col-sm-10">
+
+											<ui-select 
+											ng-model="Validation.manufacturer.value" 
+											ng-change="Validation.manufacturer.validate()" 
+											ng-disabled="select.disabled"
+											theme="bootstrap">
+												
+												<ui-select-match placeholder="{{::placeholders.GOOD_UPDATE_SELECTBOX_MANUFACTURER_PLACEHOLDER}}">
+													{{$select.selected.name}}
+												</ui-select-match>
+												
+												<ui-select-choices repeat="manufacturer in select.manufacturers | propsFilter: {name: $select.search}">
+													<div ng-bind-html="manufacturer.name"></div>
+												</ui-select-choices>
+
+											</ui-select>
+										</div>
+									</div>
+									
+									<div class="hr-line-dashed"></div>
+
+									<div class="form-group">
+										<label for="manufacturer-element" class="col-sm-2 control-label font-normal">
+											<span translate>
+												GOOD_UPDATE_SELECTBOX_CATEGORY
+											</span>
+										</label>
+										<div class="col-sm-10">
+
+											<ui-select 
+											multiple
+											ng-model="Validation.category.value"
+											ng-change="Validation.category.validate()"
+											ng-disabled="select.disabled" 
+											theme="bootstrap">
+
+												<ui-select-match placeholder="{{::placeholders.GOOD_UPDATE_SELECTBOX_CATEGORY_PLACEHOLDER}}">
+													{{$item.pathFull}}
+												</ui-select-match>
+
+												<ui-select-choices repeat="category in select.categories | propsFilter: {name: $select.search, path: $select.search}">
+													<div ng-bind-html="category.name" class="font-bold"></div>
+													<div ng-bind-html="category.path"></div>
+												</ui-select-choices>
+
+											</ui-select>
+										</div>
+									</div>
+									
+									<div class="hr-line-dashed"></div>
+
+									<div class="form-group">
+										<label class="col-sm-2 control-label font-normal"></label>
+										<div class="col-sm-10">
+
+											<div class="checkbox checkbox-inline">
+												<input type="checkbox" id="import_short_desc-element" 
+												ng-model="Validation.import_short_desc.state"
+												ng-change="Validation.import_short_desc.validate()"
+												ng-checked="Validation.import_short_desc.state">
+												<label for="import_short_desc-element">
+													<span translate>
+														GOOD_UPDATE_IMPORT_SHORT_DESC
+													</span>
+												</label>
+											</div>
+											
+											<div class="checkbox checkbox-inline">
+												<input type="checkbox" id="newg-element" 
+												ng-model="Validation.newg.state"
+												ng-change="Validation.newg.validate()"
+												ng-checked="Validation.newg.state">
+												<label for="newg-element">
+													<span translate>
+														GOOD_UPDATE_NEW
+													</span>
+												</label>
+											</div>
+											
+											<div class="checkbox checkbox-inline">
+												<input type="checkbox" id="top-element" 
+												ng-model="Validation.top.state"
+												ng-change="Validation.top.validate()"
+												ng-checked="Validation.top.state">
+												<label for="top-element">
+													<span translate>
+														GOOD_UPDATE_TOP
+													</span>
+												</label>
+											</div>
+										
+										</div>
+									</div>
+									
+									<div class="hr-line-dashed"></div>
+									
+									<div class="form-group">
+										<label for="cost-element" class="col-sm-2 control-label font-normal">
+											<span translate>
+												GOOD_UPDATE_COST
+											</span>
+										</label>
+										<div class="col-sm-10">
+											<input type="text" class="form-control" id="cost-element" 
+											ng-trim="false"
+											ng-class="{error: !!Validation.cost.invalidMsg}" 
+											ng-model="Validation.cost.value" 
+											ng-change="Validation.cost.validate()">
+											<span class="help-block m-b-none text-danger" ng-show="!!Validation.cost.invalidMsg">
+												{{ Validation.cost.invalidMsg }}
+											</span>
+										</div>
+									</div>
+
+									<div class="hr-line-dashed"></div>
+
+									<div class="form-group">
+										<label for="warranty-element" class="col-sm-2 control-label font-normal">
+											<span translate>
+												GOOD_UPDATE_WARRANTY
+											</span>
+										</label>
+										<div class="col-sm-10">
+											<input type="text" class="form-control" id="warranty-element" 
+											ng-trim="false"
+											ng-class="{error: !!Validation.warranty.invalidMsg}" 
+											ng-model="Validation.warranty.value" 
+											ng-change="Validation.warranty.validate()">
+											<span class="help-block m-b-none text-danger" ng-show="!!Validation.warranty.invalidMsg">
+												{{ Validation.warranty.invalidMsg }}
+											</span>
+										</div>
+									</div>
+
+									<div class="hr-line-dashed"></div>
+									
+									<div class="form-group">
+										<div class="col-sm-8 col-sm-offset-2">
+											<button type="button" class="btn btn-default" 
+											ng-click="GoodUpdateManager.save()" 
+											ng-disabled="Validation.errorStack.length || !Validation.changes">
+												<span translate>
+													GOOD_UPDATE_BUTTON_SAVE
+												</span>
+											</button>
+										</div>
+									</div>
+
+								</form>
+							</div>
+						</div>
+						
+						<div id="#tab-description" class="tab-pane" ng-class="{ active: TabManager.state == '#tab-description' }">
+							<div class="panel-body">
+								<form class="form-horizontal" ng-repeat="lang in TabLangManager.langList | capitalize" ng-show="TabLangManager['{{ lang | lowercase }}']">
+
+									<div class="form-group">
+										<label for="title-{{lang}}-element" class="col-sm-2 control-label font-normal">
+											<span translate>
+												GOOD_UPDATE_TITLE
+											</span>
+										</label>
+										<div class="col-sm-10">
+
+											<input type="text" class="form-control" id="title-{{lang}}-element" 
+											ng-trim="false"
+											ng-class="{error: !!Validation['title' + lang].invalidMsg}" 
+											ng-model="Validation['title' + lang].value" 
+											ng-change="Validation['title' + lang].validate()">
+
+											<span class="help-block m-b-none text-danger" 
+											ng-show="!!Validation['title' + lang].invalidMsg" 
+											ng-bind="Validation['title' + lang].invalidMsg">
+											</span>
+
+										</div>
+									</div>
+									
+									<div class="hr-line-dashed"></div>
+
+									<div class="form-group">
+										<label for="description-short-{{lang}}-element" class="col-sm-2 control-label font-normal">
+											<span translate>
+												GOOD_UPDATE_SHORT_DESCRIPTION
+											</span>
+										</label>
+										<div class="col-sm-10">
+
+											<textarea class="form-control" id="description-short-{{lang}}-element" 
+											ng-trim="false"
+											ng-class="{error: !!Validation['descriptionShort' + lang].invalidMsg}" 
+											ng-model="Validation['descriptionShort' + lang].value" 
+											ng-change="Validation['descriptionShort' + lang].validate()">
+											</textarea>
+
+											<span class="help-block m-b-none text-danger" 
+											ng-show="!!Validation['descriptionShort' + lang].invalidMsg"
+											ng-bind="Validation['descriptionShort' + lang].invalidMsg"> 
+											</span>
+
+										</div>
+									</div>
+									
+									<div class="hr-line-dashed"></div>
+									 
+									<div class="form-group">
+										<label for="description-{{lang}}-element" class="col-sm-2 control-label font-normal">
+											<span translate>
+												GOOD_UPDATE_DESCRIPTION
+											</span>
+										</label>
+										<div class="col-sm-10">
+											<div summernote config="Summernote.config" id="summernote-{{lang}}" 
+											ng-model="Validation['description' + lang].value"
+											on-change="Validation['description' + lang].validate()"></div>
+										</div>
+									</div>
+									
+									<div class="hr-line-dashed"></div>
+
+									<div class="form-group">
+										<div class="col-sm-8 col-sm-offset-2">
+											<button type="button" class="btn btn-default" 
+											ng-click="GoodUpdateManager.save()" 
+											ng-disabled="Validation.errorStack.length || !Validation.changes">
+												<span translate>
+													GOOD_UPDATE_BUTTON_SAVE
+												</span>
+											</button>
+										</div>
+									</div>
+
+								</form>
+							</div>
+						</div>
+						
+						<div id="#tab-seo" class="tab-pane" ng-class="{ active: TabManager.state == '#tab-seo' }">
+							<div class="panel-body">
+								<form class="form-horizontal" ng-repeat="lang in TabLangManager.langList | capitalize" ng-show="TabLangManager['{{ lang | lowercase}}']">
+									
+									<div class="form-group">
+										<label for="metatitle-{{lang}}-element" class="col-sm-2 control-label font-normal">
+											<span translate>
+												GOOD_UPDATE_METATITLE
+											</span>
+										</label>
+
+										<div class="col-sm-10">
+											<input type="text" class="form-control" id="metatitle-{{lang}}-element" 
+											ng-trim="false"
+											ng-class="{error: !!Validation['metatitle' + lang].invalidMsg}" 
+											ng-model="Validation['metatitle' + lang].value" 
+											ng-change="Validation['metatitle' + lang].validate()">
+											
+											<span class="help-block m-b-none text-danger" 
+											ng-show="!!Validation['metatitle' + lang].invalidMsg" 
+											ng-bind="Validation['metatitle' + lang].invalidMsg">
+											</span>
+										</div>
+									</div>
+
+									<div class="hr-line-dashed"></div>
+
+									<div class="form-group">
+										<label for="metadescription-{{lang}}-element" class="col-sm-2 control-label font-normal">
+											<span translate>
+												GOOD_UPDATE_METADESCRIPTION
+											</span>
+										</label>
+										
+										<div class="col-sm-10">
+											<input type="text" class="form-control" id="metadescription-{{lang}}-element" 
+											ng-trim="false"
+											ng-class="{error: !!Validation['metadescription' + lang].invalidMsg}" 
+											ng-model="Validation['metadescription' + lang].value" 
+											ng-change="Validation['metadescription' + lang].validate()">
+											
+											<span class="help-block m-b-none text-danger" 
+											ng-show="!!Validation['metadescription' + lang].invalidMsg" 
+											ng-bind="Validation['metadescription' + lang].invalidMsg">
+											</span>
+										</div>
+
+									</div>
+
+									<div class="hr-line-dashed"></div>
+
+									<div class="form-group">
+										<div class="col-sm-8 col-sm-offset-2">
+											<button type="button" class="btn btn-default" 
+											ng-click="GoodUpdateManager.save()" 
+											ng-disabled="Validation.errorStack.length || !Validation.changes">
+												<span translate>
+													GOOD_UPDATE_BUTTON_SAVE
+												</span>
+											</button>
+										</div>
+									</div>
+
+								</form>
+
+							</div>
+						</div>
+
+						<div id="#tab-images" class="tab-pane" ng-class="{ active: TabManager.state == '#tab-images' }">
+							<div class="panel-body">
+								<div class="row">
+									<div class="col-lg-12">
+
+										<form ng-controller="GoodFileUploadCtrl" file-upload="options" ng-class="{'fileupload-processing': processing() || loadingFiles}">
+
+											<div class="row fileupload-buttonbar">
+												<div class="col-lg-7">
+													<span class="btn btn-sm btn-default fileinput-button" ng-class="{disabled: disabled}">
+														<i class="glyphicon glyphicon-plus"></i>
+														<span translate>
+															GOOD_UPDATE_BUTTON_ADD_FILES
+														</span>
+														<input type="file" name="files[]" multiple ng-disabled="disabled">
+													</span>
+													<button type="button" class="btn btn-sm btn-default start" ng-click="submit()">
+														<i class="glyphicon glyphicon-upload"></i>
+														<span translate>
+															GOOD_UPDATE_BUTTON_UPLOAD_FILES
+														</span>
+													</button>
+													<button type="button" class="btn btn-sm btn-default cancel" ng-click="cancel()" ng-if="cancelUploadButton">
+														<i class="glyphicon glyphicon-ban-circle"></i>
+														<span translate>
+															GOOD_UPDATE_BUTTON_STOP_UPLOAD_FILES
+														</span>
+													</button>
+
+													<!-- The global file processing state -->
+													<span class="fileupload-process"></span>
+												</div>
+												<!-- The global progress state -->
+												<div class="col-lg-5 fade" ng-class="{in: active()}">
+													<!-- The global progress bar -->
+													<div class="progress progress-striped active" file-upload-progress="progress()">
+														<div class="progress-bar progress-bar-success" ng-style="{width: num + '%'}"></div>
+													</div>
+													<!-- The extended global progress state -->
+													<div class="progress-extended">&nbsp;</div>
+												</div>
+											</div>
+
+											<!-- Files -->
+											<table class="table table-striped files ng-cloak">
+												<tr ng-repeat="file in queue" ng-class="{'processing': file.$processing()}">
+													
+													<td ng-switch data-on="!!file.thumbnailUrl">
+														<div class="preview" ng-switch-when="true">
+															<a ng-href="{{file.url}}" ng-click="$event.preventDefault()" title="{{file.name}}" download="{{file.name}}" data-gallery>
+																<img ng-src="{{file.thumbnailUrl}}" width="164px" height="136px" alt="Loading...">
+															</a>
+														</div>
+														<div class="preview" ng-switch-default file-upload-preview="file"></div>
+													</td>
+
+													<td>
+														<p class="name" ng-switch data-on="!!file.url">
+															<span ng-switch-when="true" ng-switch data-on="!!file.thumbnailUrl">
+																<a ng-switch-when="true" ng-href="{{file.url}}" ng-click="$event.preventDefault()" title="{{file.name}}" download="{{file.name}}" data-gallery>
+																	{{file.name}}
+																</a>
+																<a ng-switch-default ng-href="{{file.url}}" title="{{file.name}}" download="{{file.name}}">
+																	{{file.name}}
+																</a>
+															</span>
+															<span ng-switch-default>{{file.name}}</span>
+														</p>
+														<span ng-show="file.error" class="error text-danger">{{file.error}}</span>
+													</td>
+
+													<td>
+														<p class="size">{{file.size | formatFileSize}}</p>
+														<div class="progress progress-striped active fade" ng-class="{pending: 'in'}[file.$state()]" file-upload-progress="file.$progress()">
+															<div class="progress-bar progress-bar-success" ng-style="{width: num + '%'}"></div>
+														</div>
+													</td>
+
+													<td>
+														<button type="button" class="btn btn-sm btn-default cancel" ng-click="file.$cancel()" ng-hide="!file.$cancel">
+															<i class="glyphicon glyphicon-ban-circle"></i>
+															<span translate>
+																GOOD_UPDATE_BUTTON_REMOVE
+															</span>
+														</button>
+														<button type="button" class="btn btn-sm btn-default start" ng-click="file.$submit()" ng-hide="!file.$submit || options.autoUpload" ng-disabled="file.$state() == 'pending' || file.$state() == 'rejected'">
+															<i class="glyphicon glyphicon-upload"></i>
+															<span translate>
+																GOOD_UPDATE_BUTTON_UPLOAD
+															</span>
+														</button>
+														<button type="button" class="btn btn-sm btn-danger destroy" ng-controller="GoodFileDestroyCtrl" ng-click="file.$destroy()" ng-hide="!file.$destroy">
+															<i class="glyphicon glyphicon-trash"></i>
+															<span translate>
+																GOOD_UPDATE_BUTTON_DELETE
+															</span>
+														</button>
+													</td>
+												</tr>
+											</table>
+
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<footer class="footer" ng-include="'/assets/admin/views/common/footer.html'"></footer>
+
+</div>

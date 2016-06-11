@@ -1,0 +1,176 @@
+<div id="header" ng-include="'/assets/admin/views/common/header.html'"></div>
+<aside id="menu" ng-include="'/assets/admin/views/common/navigation.html'"></aside>
+
+<div id="wrapper" class="animate-panel" data-effect="zomeIn">
+
+  <div class="content">
+
+	<div class="row">
+	  <div class="col-lg-12 text-center m-t-md">
+		<h2>
+      <span translate>ORDERSTATUS_TITLE</span>
+		</h2>
+		<p>
+			{{ currentNews.data.data.ru.title }}
+		</p>
+	  </div>
+	</div>
+	<div class="row">
+	  <div class="col-lg-12">
+		<div class="hpanel" ng-controller="OrderStatusesUpdateCtrl">
+		  <ul class="nav nav-tabs">
+			<li ng-click="TabManager.update($event)" ng-class="{ active: TabManager.state == '#tab-description' }">
+			  <a data-toggle="tab" href="#tab-description" aria-expanded="true">
+          <span translate>
+            NAME
+          </span>
+        </a>
+			</li>
+      <li ng-click="TabManager.update($event)" ng-class="{ active: TabManager.state == '#tab-notification' }">
+        <a data-toggle="tab" href="#tab-notification" aria-expanded="true">
+          <span translate>
+            NOTIFICATION
+          </span>
+        </a>
+      </li>
+
+			<div class="btn-group" ng-show="TabManager.state == '#tab-description'">
+
+			  <button type="button" class="btn btn-sm"
+				ng-class="{ 'btn-info': TabLangManager.ru, 'btn-default': !TabLangManager.ru }"
+				ng-click="TabLangManager.update($event)">RU</button>
+
+			  <button type="button" class="btn btn-sm"
+				ng-class="{ 'btn-info': TabLangManager.uk, 'btn-default': !TabLangManager.uk }"
+				ng-click="TabLangManager.update($event)">UK</button>
+
+			  <button type="button" class="btn btn-sm"
+				ng-class="{ 'btn-info': TabLangManager.en, 'btn-default': !TabLangManager.en }"
+				ng-click="TabLangManager.update($event)">EN</button>
+			</div>
+
+		  </ul>
+
+		  <div class="tab-content">
+
+			<div id="#tab-description" class="tab-pane" ng-class="{ active: TabManager.state == '#tab-description' }">
+			  <div class="panel-body">
+				<form method="get" class="form-horizontal" ng-repeat="lang in TabLangManager.langList | capitalize" ng-show="TabLangManager['{{ lang | lowercase }}']">
+
+				  <div class="form-group">
+					<label for="title-{{lang}}-element" class="col-sm-2 control-label font-normal">
+            <span translate>
+              NAME
+            </span>
+          </label>
+					<div class="col-sm-10">
+
+					  <input type="text" class="form-control" id="title-{{lang}}-element"
+						ng-trim="false"
+						ng-class="{error: !!Validation['title' + lang].invalidMsg}"
+						ng-model="Validation['title' + lang].value"
+						ng-change="Validation['title' + lang].validate()">
+
+					  <span class="help-block m-b-none text-danger"
+						ng-show="!!Validation['title' + lang].invalidMsg"
+						ng-bind="Validation['title' + lang].invalidMsg">
+					  </span>
+
+					</div>
+				  </div>
+
+				  <div class="hr-line-dashed"></div>
+
+          <div class="form-group">
+          <div class="col-sm-2 col-sm-offset-2">
+            <button type="button" class="btn btn-default"
+            ng-click="OrderStatusesUpdateManager.save()"
+            ng-disabled="Validation.errorStack.length || !Validation.changes">
+              <span translate>
+                SAVE
+              </span>
+            </button>
+          </div>
+          <div class="col-sm-2">
+            <button type="button" class="btn btn-default"
+            ng-click="OrderStatusesUpdateManager.cancel()">
+              <span translate>
+                CANCEL
+              </span>
+            </button>
+          </div>
+          </div>
+
+				</form>
+			  </div>
+			</div>
+
+      <div id="#tab-notification" class="tab-pane" ng-class="{ active: TabManager.state == '#tab-notification' }">
+			  <div class="panel-body">
+				<form method="get" class="form-horizontal" ng-repeat="lang in TabLangManager.langList | capitalize" ng-show="TabLangManager['{{ lang | lowercase }}']">
+
+
+				  <div class="hr-line-dashed"></div>
+
+          <div class="form-group">
+            <div class="col-sm-1 text-center">
+              <input type="checkbox"
+              ng-class="{error: !!Validation['sendmessageClient'].invalidMsg}"
+              ng-model="Validation['sendmessageClient'].value"
+              ng-change="Validation['sendmessageClient'].validate()">
+  					</div>
+  					<div class="col-sm-11">
+              <span translate>
+                SEND_MESSAGE_CLIENT
+              </span>
+            </div>
+				  </div>
+				  <div class="hr-line-dashed"></div>
+
+          <div class="form-group">
+            <div class="col-sm-1 text-center">
+              <input type="checkbox"
+                ng-class="{error: !!Validation['sendmessageAdmin'].invalidMsg}"
+                ng-model="Validation['sendmessageAdmin'].value"
+                ng-change="Validation['sendmessageAdmin'].validate()">
+            </div>
+  					<div class="col-sm-11">
+              <span translate>
+                SEND_MESSAGE_ADMIN
+              </span>
+            </div>
+				  </div>
+				  <div class="hr-line-dashed"></div>
+          <div class="form-group">
+          <div class="col-sm-2 col-sm-offset-2">
+            <button type="button" class="btn btn-default"
+            ng-click="OrderStatusesUpdateManager.save()"
+            ng-disabled="Validation.errorStack.length || !Validation.changes">
+              <span translate>
+                SAVE
+              </span>
+            </button>
+          </div>
+          <div class="col-sm-2">
+            <button type="button" class="btn btn-default"
+            ng-click="OrderStatusesUpdateManager.cancel()">
+              <span translate>
+                CANCEL
+              </span>
+            </button>
+          </div>
+          </div>
+
+				</form>
+			  </div>
+			</div>
+
+
+		</div>
+	  </div>
+	</div>
+  </div>
+
+  <footer class="footer" ng-include="'/assets/admin/views/common/footer.html'"></footer>
+
+</div>

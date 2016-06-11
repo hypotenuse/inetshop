@@ -1,0 +1,83 @@
+
+<div id="header" ng-include="'/assets/admin/views/common/header.html'"></div>
+<aside id="menu" ng-include="'/assets/admin/views/common/navigation.html'"></aside>
+
+<div id="wrapper">
+
+	<div class="content" animate-panel effect="zoomIn">
+
+		<div class="row">
+			<div class="col-lg-12 text-center m-t-md">
+				<h2>
+					<span translate>
+						SLIDES_TITLE
+					</span>
+				</h2>
+				<p>
+					<span translate>
+						SLIDES_SUBTITLE
+					</span>
+				</p>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="hpanel" ng-controller="SlidesCtrl">
+					<div class="panel-heading">
+						<div panel-tools></div>
+						<span translate>
+							SLIDES_LIST_TITLE
+						</span>
+					</div>
+					<div class="panel-body list">
+						<div class="project-list">
+							<table id="slideTable" class="table table-striped">
+								<thead>
+									<tr>
+										<th style="width:50px;"><div class="stats-title pull-left"><h4><span translate>SLIDES_LIST_ID</span></h4></th>
+										<th><div class="stats-title pull-left"><h4><span translate>SLIDES_LIST_THUMBNAIL</span></h4></th>
+											<th><div class="stats-title pull-left"><h4><span translate>SLIDES_LIST_URL</span></h4></th>
+										<th style="width:230px;"><div class="stats-title pull-left"><h4><span translate>SLIDES_LIST_ACTIONS</span</h4></th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr ng-repeat="slide in slides">
+										<td>{{slide.id}}</td>
+										<td><img ng-src="{{slide.picture}}" /></td>
+										<td>{{slide.url}}</td>
+										<td>
+											<button class="btn btn-default btn-sm" type="button" ng-click="slidesManager.edit(slide.id)">
+												<i class="fa fa-edit"></i>
+												<span class="bold" translate>
+													SLIDES_LIST_BUTTON_EDIT
+												</span>
+											</button>
+											<button class="btn btn-default btn-sm" type="button" ng-click="slidesManager.delete(slide.id)">
+												<i class="fa fa-trash-o"></i>
+												<span class="bold" translate>
+													SLIDES_LIST_BUTTON_DELETE
+												</span>
+											</button>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<div class="panel-footer" style="background-color: transparent">
+						<button class="btn btn-default btn-sm" type="button" ng-click="slidesManager.add()">
+							<i class="fa fa-plus"></i>
+							<span class="bold" translate>
+								SLIDES_LIST_BUTTON_ADD
+							</span>
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<footer class="footer" ng-include="'/assets/admin/views/common/footer.html'"></footer>
+
+</div>

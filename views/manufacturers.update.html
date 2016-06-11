@@ -1,0 +1,128 @@
+<div id="header" ng-include="'/assets/admin/views/common/header.html'"></div>
+<aside id="menu" ng-include="'/assets/admin/views/common/navigation.html'"></aside>
+
+<div id="wrapper" class="animate-panel" data-effect="zomeIn">
+
+  <div class="content">
+
+	<div class="row">
+	  <div class="col-lg-12 text-center m-t-md">
+		<h2>
+      <span translate>MANUFACTURER_UPDATE_SECTION_TITLE</span>
+		</h2>
+		<p>
+			{{ currentManufacturer.data.data.ru.title }}
+		</p>
+	  </div>
+	</div>
+	<div class="row">
+	  <div class="col-lg-12">
+		<div class="hpanel" ng-controller="ManufacturerUpdateCtrl">
+		  <ul class="nav nav-tabs">
+			<li ng-click="TabManager.update($event)" ng-class="{ active: TabManager.state == '#tab-description' }">
+			  <a data-toggle="tab" href="#tab-description" aria-expanded="true">
+          <span translate>
+            MANUFACTURER_UPDATE_TAB_DESCRIPTION
+          </span>
+        </a>
+			</li>
+
+			<div class="btn-group" ng-show="TabManager.state == '#tab-description' || TabManager.state == '#tab-seo'">
+
+			  <button type="button" class="btn btn-sm"
+				ng-class="{ 'btn-info': TabLangManager.ru, 'btn-default': !TabLangManager.ru }"
+				ng-click="TabLangManager.update($event)">RU</button>
+
+			  <button type="button" class="btn btn-sm"
+				ng-class="{ 'btn-info': TabLangManager.uk, 'btn-default': !TabLangManager.uk }"
+				ng-click="TabLangManager.update($event)">UK</button>
+
+			  <button type="button" class="btn btn-sm"
+				ng-class="{ 'btn-info': TabLangManager.en, 'btn-default': !TabLangManager.en }"
+				ng-click="TabLangManager.update($event)">EN</button>
+			</div>
+
+		  </ul>
+
+		  <div class="tab-content">
+
+			<div id="#tab-description" class="tab-pane" ng-class="{ active: TabManager.state == '#tab-description' }">
+			  <div class="panel-body">
+				<form method="get" class="form-horizontal" ng-repeat="lang in TabLangManager.langList | capitalize" ng-show="TabLangManager['{{ lang | lowercase }}']">
+
+				  <div class="form-group">
+					<label for="title-{{lang}}-element" class="col-sm-2 control-label font-normal">
+            <span translate>
+              MANUFACTURER_UPDATE_TITLE
+            </span>
+          </label>
+					<div class="col-sm-10">
+
+					  <input type="text" class="form-control" id="title-{{lang}}-element"
+						ng-trim="false"
+						ng-class="{error: !!Validation['title' + lang].invalidMsg}"
+						ng-model="Validation['title' + lang].value"
+						ng-change="Validation['title' + lang].validate()">
+
+					  <span class="help-block m-b-none text-danger"
+						ng-show="!!Validation['title' + lang].invalidMsg"
+						ng-bind="Validation['title' + lang].invalidMsg">
+					  </span>
+
+					</div>
+				  </div>
+
+				  <div class="hr-line-dashed"></div>
+
+				  <div class="form-group">
+					<label for="description-{{lang}}-element" class="col-sm-2 control-label font-normal">
+            <span translate>
+              MANUFACTURER_UPDATE_DESCRIPTION
+            </span>
+          </label>
+					<div class="col-sm-10">
+
+						<textarea class="form-control" id="description-{{lang}}-element"
+						ng-trim="false"
+						ng-class="{error: !!Validation['description' + lang].invalidMsg}"
+						ng-model="Validation['description' + lang].value"
+						ng-change="Validation['description' + lang].validate()">
+					  </textarea>
+
+					</div>
+				  </div>
+
+				  <div class="hr-line-dashed"></div>
+
+				  <div class="form-group">
+					<div class="col-sm-8 col-sm-offset-2">
+					  <button type="button" class="btn btn-default"
+						ng-click="ManufacturerUpdateManager.save()"
+						ng-disabled="Validation.errorStack.length || !Validation.changes">
+              <span translate>
+                MANUFACTURER_UPDATE_BUTTON_SAVE
+              </span>
+            </button>
+            &nbsp;
+              <a href="/admin/manufacturers" class="btn btn-default">
+                <span translate>
+                  MANUFACTURER_UPDATE_BUTTON_CANCEL
+                </span>
+              </a>
+					</div>
+				  </div>
+
+				</form>
+			  </div>
+			</div>
+
+		  </div>
+
+		</div>
+	  </div>
+	</div>
+  </div>
+
+  <footer class="footer" ng-include="'/assets/admin/views/common/footer.html'"></footer>
+
+</div>

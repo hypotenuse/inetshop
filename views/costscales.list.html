@@ -1,0 +1,123 @@
+
+
+<div id="header" ng-include="'/assets/admin/views/common/header.html'"></div>
+<aside id="menu" ng-include="'/assets/admin/views/common/navigation.html'"></aside>
+
+<div id="wrapper">
+
+	<div class="content" animate-panel effect="zoomIn">
+
+		<div class="row">
+			<div class="col-lg-12 text-center m-t-md">
+				<h2>
+					<span translate>
+						COSTCALES
+					</span>
+				</h2>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="hpanel" ng-controller="CostscalesCtrl">
+					<div class="panel-body costscales-list">
+						<div class="project-list" class="form-horizontal" ng-repeat="cost in costscales">
+              <div class="row">
+                <div class="span3">
+                  <div class="form-group">
+          					<label for="name-element" class="col-sm-1 control-label font-normal">
+                      <span translate>
+                        PRICE_FROM
+                      </span>
+                    </label>
+          					<div class="col-sm-2">
+          					  <input type="number" class="form-control" id="name-element"
+          						ng-trim="false"
+											ng-readonly="cost.edit"
+											ng-change="costsManager.change('start')"
+											ng-class="{error: !cost.start }"
+          						ng-model="cost.start">
+          					  </span>
+          					</div>
+        				  </div>
+                </div>
+                <div class="span3">
+                  <div class="form-group">
+          					<label for="name-element" class="col-sm-1 control-label font-normal">
+                      <span translate>
+                        PRICE_TO
+                      </span>
+                    </label>
+										<div class="col-sm-2">
+          					  <input type="number" class="form-control" id="name-element"
+          						ng-trim="false"
+											ng-readonly="cost.edit"
+											ng-change="costsManager.change('finish')"
+											ng-class="{error: !cost.finish }"
+          						ng-model="cost.finish">
+          					  </span>
+          					</div>
+        				  </div>
+                </div>
+                <div class="span3">
+                  <div class="form-group">
+          					<label for="name-element" class="col-sm-2 control-label font-normal">
+                      <span translate>
+                        PRICE_PERCENT
+                      </span>
+                    </label>
+										<div class="col-sm-1">
+          					  <input type="number" class="form-control" id="name-element"
+          						ng-trim="false"
+											ng-change="costsManager.change('percent')"
+											ng-readonly="cost.edit"
+											ng-class="{error: !cost.percent }"
+          						ng-model="cost.percent">
+          					  </span>
+          					</div>
+        				  </div>
+                </div>
+                <div class="span3">
+                  <div class="form-group">
+                    <button type="button" class="btn btn-default" ng-click="costsManager.delete(cost.id)" ng-show="cost.id > 0">
+                      <span translate>
+                        DELETE
+                      </span>
+                    </button>
+										<button type="button" class="btn btn-default" ng-click="costsManager.editItem(cost)" ng-show="cost.edit">
+                      <span translate>
+                        EDIT
+                      </span>
+                    </button>
+										<button type="button" class="btn btn-default" ng-show="cost.save" ng-click="costsManager.saveItem(cost)">
+                      <span translate>
+                        SAVE
+                      </span>
+                    </button>
+										<button class="btn btn-default btn-sm" type="button"
+											ng-click="costsManager.save()" ng-show="cost.id == 0">
+											<span class="bold" translate>
+												SAVE
+											</span>
+										</button>
+        				  </div>
+                </div>
+              </div>
+						</div>
+					</div>
+					<div class="panel-footer">
+						<button class="btn btn-default btn-sm" type="button" ng-click="costscalesManager.add()" ng-disabled="add">
+							<i class="fa fa-plus"></i>
+							<span class="bold" translate>
+								ADD
+							</span>
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<footer class="footer" ng-include="'/assets/admin/views/common/footer.html'"></footer>
+
+</div>

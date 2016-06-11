@@ -1,0 +1,80 @@
+<div class="inmodal">
+
+	<div class="modal-header">
+		<h4 class="modal-title">
+			<span translate>
+				ADMINS_MODAL_ADD_TITLE
+			</span>
+		</h4>
+	</div>
+
+	<div class="modal-body">
+		<form class="form-horizontal">
+			<div class="form-group">
+				<label class="col-sm-2 control-label font-normal">
+					<span translate>
+						ADMINS_MODAL_ADD_NAME
+					</span>
+				</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control"
+						ng-trim="false"
+						ng-class="{error: !!ValidationName.invalidMsg}"
+						ng-model="ValidationName.value"
+						ng-change="ValidationName.validate()">
+					<span class="help-block m-b-none text-danger" ng-show="!!ValidationName.invalidMsg">
+						{{ ValidationName.invalidMsg }}
+					</span>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label font-normal">
+					<span translate>
+						ADMINS_MODAL_ADD_EMAIL
+					</span>
+				</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control"
+						ng-trim="false"
+						ng-class="{error: !!ValidationEmail.invalidMsg}"
+						ng-model="ValidationEmail.value"
+						ng-change="ValidationEmail.validate()">
+					<span class="help-block m-b-none text-danger" ng-show="!!ValidationEmail.invalidMsg">
+						{{ ValidationEmail.invalidMsg }}
+					</span>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label font-normal">
+					<span translate>
+						ADMINS_MODAL_ADD_PASSWORD
+					</span>
+				</label>
+				<div class="col-sm-10">
+					<input type="password" class="form-control"
+						ng-trim="false"
+						ng-class="{error: !!ValidationPassword.invalidMsg}"
+						ng-model="ValidationPassword.value"
+						ng-change="ValidationPassword.validate()">
+					<span class="help-block m-b-none text-danger" ng-show="!!ValidationPassword.invalidMsg">
+						{{ ValidationPassword.invalidMsg }}
+					</span>
+				</div>
+			</div>
+		</form>
+	</div>
+
+	<div class="modal-footer">
+		<button type="button" class="btn btn-default" ng-click="modalManager.cancel()">
+			<span translate>
+				ADMINS_MODAL_ADD_BUTTON_CANCEL
+			</span>
+		</button>
+		<button type="button" class="btn btn-default" ng-click="modalManager.ok()" ng-disabled="!!Validation.invalidMsg">
+			<span translate>
+				ADMINS_MODAL_ADD_BUTTON_SAVE
+			</span>
+		</button>
+	</div>
+
+</div>

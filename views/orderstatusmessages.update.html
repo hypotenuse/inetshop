@@ -1,0 +1,174 @@
+<div id="header" ng-include="'/assets/admin/views/common/header.html'"></div>
+<aside id="menu" ng-include="'/assets/admin/views/common/navigation.html'"></aside>
+
+<div id="wrapper" class="animate-panel" data-effect="zomeIn">
+
+  <div class="content">
+
+	<div class="row">
+	  <div class="col-lg-12 text-center m-t-md">
+		<h2>
+      <span translate>MESSAGES</span>
+		</h2>
+		<p>
+			{{ currentOrderStatusMessages.data.data.ru.messagetitle }}
+		</p>
+	  </div>
+	</div>
+	<div class="row">
+	  <div class="col-lg-12">
+		<div class="hpanel" ng-controller="OrderstatusmessagesUpdateCtrl">
+		  <ul class="nav nav-tabs">
+			<li ng-click="TabManager.update($event)" ng-class="{ active: TabManager.state == '#tab-description' }">
+			  <a data-toggle="tab" href="#tab-description" aria-expanded="true">
+          <span translate>
+            DESCRIPTION
+          </span>
+        </a>
+			</li>
+
+			<div class="btn-group" ng-show="TabManager.state == '#tab-description'">
+
+			  <button type="button" class="btn btn-sm"
+				ng-class="{ 'btn-info': TabLangManager.ru, 'btn-default': !TabLangManager.ru }"
+				ng-click="TabLangManager.update($event)">RU</button>
+
+			  <button type="button" class="btn btn-sm"
+				ng-class="{ 'btn-info': TabLangManager.uk, 'btn-default': !TabLangManager.uk }"
+				ng-click="TabLangManager.update($event)">UK</button>
+
+			  <button type="button" class="btn btn-sm"
+				ng-class="{ 'btn-info': TabLangManager.en, 'btn-default': !TabLangManager.en }"
+				ng-click="TabLangManager.update($event)">EN</button>
+			</div>
+
+		  </ul>
+
+		  <div class="tab-content">
+
+			<div id="#tab-description" class="tab-pane" ng-class="{ active: TabManager.state == '#tab-description' }">
+			  <div class="panel-body">
+				<form method="get" class="form-horizontal" ng-repeat="lang in TabLangManager.langList | capitalize" ng-show="TabLangManager['{{ lang | lowercase }}']">
+
+          <div class="form-group">
+  					<label for="title-{{lang}}-element" class="col-sm-2 control-label font-normal">
+              <span translate>
+                RECIPIENT
+              </span>
+            </label>
+  					<div class="col-sm-4">
+              <select class="form-control"
+                ng-change="Validation['forclient'].validate()"
+                ng-model="Validation['forclient'].value">
+                <option ng-value="false" ng-selected="!Validation['forclient'].value" translate>ADMINISTRATOR</option>
+                <option ng-value="true" ng-selected="Validation['forclient'].value" translate>CUSTOMER</option>
+              </select>
+
+  					  <span class="help-block m-b-none text-danger"
+  						ng-show="!!Validation['forclient'].invalidMsg"
+  						ng-bind="Validation['forclient'].invalidMsg">
+                {{ Validation['forclient'].invalidMsg }}
+  					  </span>
+  					</div>
+            <label class="col-sm-2 control-label font-normal">
+    					<span translate>
+    						ORDERSTATUS_TITLE
+    					</span>
+    				</label>
+    				<div class="col-sm-4">
+    					<select class="form-control"
+              ng-change="Validation['orderstatusid'].validate()"
+    						ng-change="Validation['orderstatusid'].validate()"
+    						ng-model="Validation['orderstatusid'].value">
+    		  			<option ng-repeat="option in orderStatuses"
+                ng-selected="Validation['orderstatusid'].value == option[0]"
+                ng-value="{{option[0]}}">{{option[1]}}</option>
+    					</select>
+    					<span class="help-block m-b-none text-danger" ng-show="!!Validation['orderstatusid'].invalidMsg">
+    						{{ Validation['orderstatusid'].invalidMsg }}
+    					</span>
+    				</div>
+				  </div>
+
+				  <div class="hr-line-dashed"></div>
+
+
+				  <div class="form-group">
+  					<label for="title-{{lang}}-element" class="col-sm-2 control-label font-normal">
+              <span translate>
+                TITLE
+              </span>
+            </label>
+  					<div class="col-sm-10">
+  					  <input type="text" class="form-control" id="title-{{lang}}-element"
+  						ng-trim="false"
+  						ng-class="{error: !!Validation['messagetitle' + lang].invalidMsg}"
+  						ng-model="Validation['messagetitle' + lang].value"
+  						ng-change="Validation['messagetitle' + lang].validate()">
+
+  					  <span class="help-block m-b-none text-danger"
+  						ng-show="!!Validation['messagetitle' + lang].invalidMsg"
+  						ng-bind="Validation['messagetitle' + lang].invalidMsg">
+  					  </span>
+
+  					</div>
+				  </div>
+
+				  <div class="hr-line-dashed"></div>
+
+          <div class="form-group">
+  					<label for="title-{{lang}}-element" class="col-sm-2 control-label font-normal">
+              <span translate>
+                DESCRIPTION
+              </span>
+            </label>
+  					<div class="col-sm-10">
+
+              <textarea class="form-control" id="title-{{lang}}-element"
+  						ng-trim="false"
+  						ng-class="{error: !!Validation['messagetext' + lang].invalidMsg}"
+  						ng-model="Validation['messagetext' + lang].value"
+  						ng-change="Validation['messagetext' + lang].validate()"></textarea>
+
+  					  <span class="help-block m-b-none text-danger"
+  						ng-show="!!Validation['messagetext' + lang].invalidMsg"
+  						ng-bind="Validation['messagetext' + lang].invalidMsg">
+  					  </span>
+
+  					</div>
+				  </div>
+
+				  <div class="hr-line-dashed"></div>
+
+          <div class="form-group">
+          <div class="col-sm-2 col-sm-offset-2">
+            <button type="button" class="btn btn-default"
+            ng-click="OrderStatusMessageUpdateManager.save()"
+            ng-disabled="Validation.errorStack.length || !Validation.changes">
+              <span translate>
+                SAVE
+              </span>
+            </button>
+          </div>
+          <div class="col-sm-2">
+            <button type="button" class="btn btn-default"
+            ng-click="OrderStatusMessageUpdateManager.cancel()">
+              <span translate>
+                CANCEL
+              </span>
+            </button>
+          </div>
+          </div>
+
+				</form>
+			  </div>
+			</div>
+
+		</div>
+	  </div>
+	</div>
+  </div>
+
+  <footer class="footer" ng-include="'/assets/admin/views/common/footer.html'"></footer>
+
+</div>

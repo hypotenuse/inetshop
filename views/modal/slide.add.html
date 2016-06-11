@@ -1,0 +1,78 @@
+<div class="inmodal">
+	<div class="modal-header">
+		<h4 class="modal-title">
+			<span translate>
+				SLIDES_MODAL_ADD_TITLE
+			</span>
+		</h4>
+		<small class="font-bold">
+			<span translate>
+				SLIDES_MODAL_ADD_SUBTITLE
+			</span>
+		</small>
+	</div>
+	<div class="modal-body">
+		<form method="get" class="form-horizontal">
+			<div class="form-group">
+				<label class="col-sm-2 control-label font-normal">
+					<span translate>
+						SLIDES_MODAL_ADD_SLIDE_URL
+					</span>
+				</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control"
+					ng-model="Validation.value"
+					ng-change="Validation.validate()">
+					<span class="help-block m-b-none text-danger" ng-show="!!Validation.invalidMsg">{{ Validation.invalidMsg }}</span>
+				</div>
+
+				<div class="col-sm-12">&nbsp;</div>
+
+				<label class="col-sm-2 control-label font-normal">
+					<span>
+						&nbsp;
+					</span>
+				</label>
+				<div class="col-sm-10">
+					<img ng-show="imageSrc" ng-src="{{imageSrc}}" width="150px" height="100px" />
+					<button type="button" ng-click="removeImage()" class="btn btn-sm btn-default cancel" ng-show="imageSrc" >
+						<i class="glyphicon glyphicon-ban-circle"></i>
+						<span translate>SLIDES_LIST_BUTTON_REMOVE</span>
+					</button>
+				</div>
+
+				<div class="col-sm-12">&nbsp;</div>
+
+				<label class="col-sm-2 control-label font-normal">
+					<span translate>
+						SLIDES_MODAL_ADD_SLIDE_IMAGE
+					</span>
+				</label>
+				<div class="col-sm-10">
+					<span class="btn btn-sm btn-default fileinput-button" >
+						<i class="glyphicon glyphicon-plus"></i>
+						<span translate>
+							SLIDES_MODAL_ADD_SLIDE_THUMBNAIL
+						</span>
+						<input type="file" ng-file-select="onFileSelect($files)" file-model="picture" >
+					</span>
+					<span class="help-block m-b-none text-danger" ng-show="!imageSrc"><span translate>
+						SLIDES_MODAL_ADD_VALIDATION_IMAGE
+					</span></span>
+				</div>
+			</div>
+		</form>
+		</div>
+	<div class="modal-footer">
+		 <button type="button" class="btn btn-default" ng-click="modalManager.cancel()">
+			<span translate>
+				SLIDES_MODAL_ADD_BUTTON_CANCEL
+			</span>
+		</button>
+		<button type="submit" class="btn btn-default"  ng-disabled="!!Validation.invalidMsg || !imageSrc" ng-click="modalManager.ok()">
+			<span translate>
+				SLIDES_MODAL_ADD_BUTTON_SAVE
+			</span>
+		</button>
+	</div>
+</div>

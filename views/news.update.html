@@ -1,0 +1,218 @@
+<div id="header" ng-include="'/assets/admin/views/common/header.html'"></div>
+<aside id="menu" ng-include="'/assets/admin/views/common/navigation.html'"></aside>
+
+<div id="wrapper" class="animate-panel" data-effect="zomeIn">
+
+  <div class="content">
+
+	<div class="row">
+	  <div class="col-lg-12 text-center m-t-md">
+		<h2>
+      <span translate>NEWS_UPDATE_SECTION_TITLE</span>
+		</h2>
+		<p>
+			{{ currentNews.data.data.ru.title }}
+		</p>
+	  </div>
+	</div>
+	<div class="row">
+	  <div class="col-lg-12">
+		<div class="hpanel" ng-controller="NewsUpdateCtrl">
+		  <ul class="nav nav-tabs">
+			<li ng-click="TabManager.update($event)" ng-class="{ active: TabManager.state == '#tab-description' }">
+			  <a data-toggle="tab" href="#tab-description" aria-expanded="true">
+          <span translate>
+            NEWS_UPDATE_TAB_DESCRIPTION
+          </span>
+        </a>
+			</li>
+			<li ng-click="TabManager.update($event)" ng-class="{ active: TabManager.state == '#tab-images' }">
+				<a data-toggle="tab" href="#tab-images" aria-expanded="true">
+					<span translate>
+						NEWS_UPDATE_TAB_PICTURES
+					</span>
+				</a>
+			</li>
+
+			<div class="btn-group" ng-show="TabManager.state == '#tab-description'">
+
+			  <button type="button" class="btn btn-sm"
+				ng-class="{ 'btn-info': TabLangManager.ru, 'btn-default': !TabLangManager.ru }"
+				ng-click="TabLangManager.update($event)">RU</button>
+
+			  <button type="button" class="btn btn-sm"
+				ng-class="{ 'btn-info': TabLangManager.uk, 'btn-default': !TabLangManager.uk }"
+				ng-click="TabLangManager.update($event)">UK</button>
+
+			  <button type="button" class="btn btn-sm"
+				ng-class="{ 'btn-info': TabLangManager.en, 'btn-default': !TabLangManager.en }"
+				ng-click="TabLangManager.update($event)">EN</button>
+			</div>
+
+		  </ul>
+
+		  <div class="tab-content">
+
+			<div id="#tab-description" class="tab-pane" ng-class="{ active: TabManager.state == '#tab-description' }">
+			  <div class="panel-body">
+				<form method="get" class="form-horizontal" ng-repeat="lang in TabLangManager.langList | capitalize" ng-show="TabLangManager['{{ lang | lowercase }}']">
+
+				  <div class="form-group">
+					<label for="title-{{lang}}-element" class="col-sm-2 control-label font-normal">
+            <span translate>
+              NEWS_UPDATE_TITLE
+            </span>
+          </label>
+					<div class="col-sm-10">
+
+					  <input type="text" class="form-control" id="title-{{lang}}-element"
+						ng-trim="false"
+						ng-class="{error: !!Validation['title' + lang].invalidMsg}"
+						ng-model="Validation['title' + lang].value"
+						ng-change="Validation['title' + lang].validate()">
+
+					  <span class="help-block m-b-none text-danger"
+						ng-show="!!Validation['title' + lang].invalidMsg"
+						ng-bind="Validation['title' + lang].invalidMsg">
+					  </span>
+
+					</div>
+				  </div>
+
+				  <div class="hr-line-dashed"></div>
+
+					<div class="form-group">
+						<label for="description-{{lang}}-element" class="col-sm-2 control-label font-normal">
+							<span translate>
+								NEWS_UPDATE_DESCRIPTION
+							</span>
+						</label>
+						<div class="col-sm-10">
+							<div summernote config="Summernote.config" id="summernote-{{lang}}"
+							ng-model="Validation['content' + lang].value"
+							on-change="Validation['content' + lang].validate()"></div>
+					  </div>
+					</div>
+
+				  <div class="hr-line-dashed"></div>
+
+				  <div class="form-group">
+					<div class="col-sm-8 col-sm-offset-2">
+					  <button type="button" class="btn btn-default"
+						ng-click="NewsUpdateManager.save()"
+						ng-disabled="Validation.errorStack.length || !Validation.changes">
+              <span translate>
+                NEWS_UPDATE_BUTTON_SAVE
+              </span>
+            </button>
+					</div>
+				  </div>
+
+				</form>
+			  </div>
+			</div>
+
+			<div id="#tab-images" class="tab-pane" ng-class="{ active: TabManager.state == '#tab-images' }">
+				<div class="panel-body">
+					<div class="row">
+						<div class="col-lg-12">
+
+							<form ng-controller="NewsFileUploadCtrl" file-upload="options" ng-class="{'fileupload-processing': processing() || loadingFiles}">
+
+								<div class="row fileupload-buttonbar" ng-show="queue.length == 0">
+									<div class="col-lg-7">
+										<span class="btn btn-sm btn-default fileinput-button" ng-class="{disabled: disabled}">
+											<i class="glyphicon glyphicon-plus"></i>
+											<span translate>
+												NEWS_UPDATE_BUTTON_ADD_FILES
+											</span>
+											<input type="file" name="files[]" multiple ng-disabled="disabled">
+										</span>
+										<button type="button" class="btn btn-sm btn-default start" ng-click="submit()">
+											<i class="glyphicon glyphicon-upload"></i>
+											<span translate>
+												NEWS_UPDATE_BUTTON_UPLOAD_FILES
+											</span>
+										</button>
+										<button type="button" class="btn btn-sm btn-default cancel" ng-click="cancel()" ng-if="cancelUploadButton">
+											<i class="glyphicon glyphicon-ban-circle"></i>
+											<span translate>
+												NEWS_UPDATE_BUTTON_STOP_UPLOAD_FILES
+											</span>
+										</button>
+
+										<!-- The global file processing state -->
+										<span class="fileupload-process"></span>
+									</div>
+									<!-- The global progress state -->
+									<div class="col-lg-5 fade" ng-class="{in: active()}">
+										<!-- The global progress bar -->
+										<div class="progress progress-striped active" file-upload-progress="progress()">
+											<div class="progress-bar progress-bar-success" ng-style="{width: num + '%'}"></div>
+										</div>
+										<!-- The extended global progress state -->
+										<div class="progress-extended">&nbsp;</div>
+									</div>
+								</div>
+								<!-- Files -->
+								<table class="table table-striped files ng-cloak">
+									<tr ng-repeat="file in queue" ng-class="{'processing': file.$processing()}">
+
+										<td ng-switch data-on="!!file.thumbnailUrl">
+											<div class="preview" ng-switch-when="true">
+												<a ng-href="{{file.url}}" ng-click="$event.preventDefault()" title="{{file.name}}" download="{{file.name}}" data-gallery>
+													<img ng-src="{{file.thumbnailUrl}}" width="164px" height="136px" alt="Loading...">
+												</a>
+											</div>
+											<div class="preview" ng-switch-default file-upload-preview="file"></div>
+										</td>
+
+										<td>
+											<span ng-show="file.error" class="error text-danger">{{file.error}}</span>
+										</td>
+
+										<td>
+											<p class="size">{{file.size | formatFileSize}}</p>
+											<div class="progress progress-striped active fade" ng-class="{pending: 'in'}[file.$state()]" file-upload-progress="file.$progress()">
+												<div class="progress-bar progress-bar-success" ng-style="{width: num + '%'}"></div>
+											</div>
+										</td>
+
+										<td>
+											<button type="button" class="btn btn-sm btn-default cancel" ng-click="file.$cancel()" ng-hide="!file.$cancel">
+												<i class="glyphicon glyphicon-ban-circle"></i>
+												<span translate>
+													NEWS_UPDATE_BUTTON_REMOVE
+												</span>
+											</button>
+											<button type="button" class="btn btn-sm btn-default start" ng-click="file.$submit()" ng-hide="!file.$submit || options.autoUpload" ng-disabled="file.$state() == 'pending' || file.$state() == 'rejected'">
+												<i class="glyphicon glyphicon-upload"></i>
+												<span translate>
+													NEWS_UPDATE_BUTTON_UPLOAD
+												</span>
+											</button>
+											<button type="button" class="btn btn-sm btn-danger destroy" ng-controller="NewsFileDestroyCtrl" ng-click="file.$destroy()" ng-hide="!file.$destroy">
+												<i class="glyphicon glyphicon-trash"></i>
+												<span translate>
+													NEWS_UPDATE_BUTTON_DELETE
+												</span>
+											</button>
+										</td>
+									</tr>
+								</table>
+
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		  </div>
+
+		</div>
+	  </div>
+	</div>
+  </div>
+
+  <footer class="footer" ng-include="'/assets/admin/views/common/footer.html'"></footer>
+
+</div>

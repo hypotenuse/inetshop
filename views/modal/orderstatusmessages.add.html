@@ -1,0 +1,97 @@
+<div class="inmodal">
+
+	<div class="modal-header">
+		<h4 class="modal-title">
+			<span translate>
+				MESSAGES
+			</span>
+		</h4>
+	</div>
+
+	<div class="modal-body">
+		<form class="form-horizontal">
+			<div class="form-group">
+				<label class="col-sm-2 control-label font-normal">
+					<span translate>
+						RECIPIENT
+					</span>
+				</label>
+				<div class="col-sm-10">
+					<select class="form-control"
+						ng-change="ValidationForclient.validate()"
+						ng-model="ValidationForclient.value">
+						<option ng-value="false" ng-selected="true" translate>ADMINISTRATOR</option>
+						<option ng-value="true" translate>CUSTOMER</option>
+					</select>
+				</div>
+      </div>
+
+			<div class="form-group">
+				<label class="col-sm-2 control-label font-normal">
+					<span translate>
+						ORDERSTATUS_TITLE
+					</span>
+				</label>
+				<div class="col-sm-10">
+					<select class="form-control"
+						ng-change="ValidationOrderStatus.validate()"
+						ng-model="ValidationOrderStatus.value">
+		  			<option ng-repeat="option in orderStatuses" value="{{option[0]}}">{{option[1]}}</option>
+					</select>
+
+					<span class="help-block m-b-none text-danger" ng-show="!!ValidationOrderStatus.invalidMsg">
+						{{ ValidationOrderStatus.invalidMsg }}
+					</span>
+
+				</div>
+      </div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label font-normal">
+					<span translate>
+						NAME
+					</span>
+				</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control"
+						ng-trim="false"
+						ng-class="{error: !!ValidationTitle.invalidMsg}"
+						ng-model="ValidationTitle.value"
+						ng-change="ValidationTitle.validate()">
+					<span class="help-block m-b-none text-danger" ng-show="!!ValidationTitle.invalidMsg">
+						{{ ValidationTitle.invalidMsg }}
+					</span>
+				</div>
+      </div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label font-normal">
+					<span translate>
+						DESCRIPTION
+					</span>
+				</label>
+				<div class="col-sm-10">
+					<textarea class="form-control" rows="5" ng-trim="false"
+					ng-class="{error: !!ValidationText.invalidMsg}"
+					ng-model="ValidationText.value"
+					ng-change="ValidationText.validate()"></textarea>
+					<span class="help-block m-b-none text-danger" ng-show="!!ValidationText.invalidMsg">
+						{{ ValidationText.invalidMsg }}
+					</span>
+				</div>
+      </div>
+		</form>
+	</div>
+
+	<div class="modal-footer">
+		<button type="button" class="btn btn-default" ng-click="modalManager.cancel()">
+			<span translate>
+				CANCEL
+			</span>
+		</button>
+		<button type="button" class="btn btn-default" ng-click="modalManager.ok()" ng-disabled="!!Validation.invalidMsg">
+			<span translate>
+				SAVE
+			</span>
+		</button>
+	</div>
+
+</div>

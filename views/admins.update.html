@@ -1,0 +1,151 @@
+<div id="header" ng-include="'/assets/admin/views/common/header.html'"></div>
+<aside id="menu" ng-include="'/assets/admin/views/common/navigation.html'"></aside>
+
+<div id="wrapper" class="animate-panel" data-effect="zomeIn">
+
+  <div class="content">
+
+	<div class="row">
+	  <div class="col-lg-12 text-center m-t-md">
+		<h2>
+      <span translate>ADMINS_UPDATE_SECTION_TITLE</span>
+		</h2>
+		<p>
+			{{ currentAdmin.data.name }}
+		</p>
+	  </div>
+	</div>
+	<div class="row">
+	  <div class="col-lg-12">
+		<div class="hpanel" ng-controller="AdminsUpdateCtrl">
+		  <ul class="nav nav-tabs">
+			<li ng-click="TabManager.update($event)" ng-class="{ active: TabManager.state == '#tab-description' }">
+			  <a data-toggle="tab" href="#tab-description" aria-expanded="true">
+          <span translate>
+            ADMINS_UPDATE_TAB_DESCRIPTION
+          </span>
+        </a>
+			</li>
+		  </ul>
+
+		  <div class="tab-content">
+
+			<div id="#tab-description" class="tab-pane" ng-class="{ active: TabManager.state == '#tab-description' }">
+			  <div class="panel-body">
+				<form method="get" class="form-horizontal">
+
+				  <div class="form-group">
+  					<label for="name-element" class="col-sm-2 control-label font-normal">
+              <span translate>
+                ADMINS_UPDATE_NAME
+              </span>
+            </label>
+  					<div class="col-sm-10">
+
+  					  <input type="text" class="form-control" id="name-element"
+  						ng-trim="false"
+  						ng-class="{error: !!Validation['name'].invalidMsg}"
+  						ng-model="Validation['name'].value"
+  						ng-change="Validation['name'].validate()">
+
+  					  <span class="help-block m-b-none text-danger"
+  						ng-show="!!Validation['name'].invalidMsg"
+  						ng-bind="Validation['name'].invalidMsg">
+  					  </span>
+
+  					</div>
+				  </div>
+
+				  <div class="hr-line-dashed"></div>
+
+          <div class="form-group">
+  					<label for="email-element" class="col-sm-2 control-label font-normal">
+              <span translate>
+                ADMINS_UPDATE_EMAIL
+              </span>
+            </label>
+  					<div class="col-sm-10">
+  					  <input type="text" class="form-control" id="email-element"
+  						ng-trim="false"
+  						ng-class="{error: !!Validation['email'].invalidMsg}"
+  						ng-model="Validation['email'].value"
+  						ng-change="Validation['email'].validate()">
+
+  					  <span class="help-block m-b-none text-danger"
+  						ng-show="!!Validation['email'].invalidMsg"
+  						ng-bind="Validation['email'].invalidMsg">
+  					  </span>
+  					</div>
+				  </div>
+				  <div class="hr-line-dashed"></div>
+          <div class="form-group">
+  					<label for="pass-element" class="col-sm-2 control-label font-normal">
+              <span translate>
+                ADMINS_UPDATE_OLD_PASSWORD
+              </span>
+            </label>
+  					<div class="col-sm-10">
+
+  					  <input type="password" class="form-control" id="pass-element"
+  						ng-trim="false"
+  						ng-class="{error: !!Validation['old_pass'].invalidMsg}"
+  						ng-model="Validation['old_pass'].value"
+  						ng-change="Validation['old_pass'].validate()">
+
+  					  <span class="help-block m-b-none text-danger"
+  						ng-show="!!Validation['old_pass'].invalidMsg"
+  						ng-bind="Validation['old_pass'].invalidMsg">
+  					  </span>
+
+  					</div>
+				  </div>
+          <div class="hr-line-dashed"></div>
+
+
+          <div class="form-group">
+  					<label for="pass-element" class="col-sm-2 control-label font-normal">
+              <span translate>
+                ADMINS_UPDATE_PASSWORD
+              </span>
+            </label>
+  					<div class="col-sm-10">
+
+  					  <input type="password" class="form-control" id="pass-element"
+  						ng-trim="false"
+  						ng-class="{error: !!Validation['pass'].invalidMsg}"
+  						ng-model="Validation['pass'].value"
+  						ng-change="Validation['pass'].validate()">
+
+  					  <span class="help-block m-b-none text-danger"
+  						ng-show="!!Validation['pass'].invalidMsg"
+  						ng-bind="Validation['pass'].invalidMsg">
+  					  </span>
+
+  					</div>
+				  </div>
+          <div class="hr-line-dashed"></div>
+
+				  <div class="form-group">
+					<div class="col-sm-8 col-sm-offset-2">
+					  <button type="button" class="btn btn-default"
+						ng-click="AdminsUpdateManager.save()"
+						ng-disabled="Validation.errorStack.length || !Validation.changes">
+              <span translate>
+                ADMINS_UPDATE_BUTTON_SAVE
+              </span>
+            </button>
+					</div>
+				  </div>
+
+				</form>
+			  </div>
+			</div>
+
+		</div>
+	  </div>
+	</div>
+  </div>
+
+  <footer class="footer" ng-include="'/assets/admin/views/common/footer.html'"></footer>
+
+</div>

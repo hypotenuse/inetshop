@@ -1,0 +1,66 @@
+
+
+<div id="header" ng-include="'/assets/admin/views/common/header.html'"></div>
+<aside id="menu" ng-include="'/assets/admin/views/common/navigation.html'"></aside>
+
+<div id="wrapper">
+
+	<div class="content" animate-panel effect="zoomIn">
+
+		<div class="row">
+			<div class="col-lg-12 text-center m-t-md">
+				<h2>
+					<span translate>
+						CUSTOMERS
+					</span>
+				</h2>
+				<p>
+					<span translate>
+						LIST
+					</span>
+				</p>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="hpanel" ng-controller="CustomersCtrl">
+					<div class="panel-heading">
+						<span translate>
+							LIST
+						</span>
+					</div>
+					<div class="panel-body list">
+						<div class="project-list">
+							<table datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" id="orderStatusTable" class="table table-striped">
+								<thead>
+									<tr>
+										<th width="5%"><div class="stats-title pull-left"><h4><span translate>ID</span></h4></th>
+										<th width="20%"><div class="stats-title pull-left"><h4><span translate>NAME</span></h4></th>
+										<th width="15%"><div class="stats-title pull-left"><h4><span translate>EMAIL</span></h4></th>
+										<th width="20%"><div class="stats-title pull-left"><h4><span translate>PHONE</span></h4></th>
+										<th width="20%"><div class="stats-title pull-left"><h4><span translate>SPENT</span></h4></th>
+										<th width="20%"><div class="stats-title pull-left"><h4><span translate>LASTVISIT</span></h4></th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr ng-repeat="customer in customers">
+										<td>{{customer.id}}</td>
+										<td>{{customer.name}}</td>
+										<td>{{customer.email}}</td>
+										<td>{{customer.phone}}</td>
+										<td>{{customer.spent}}</td>
+										<td>{{customer.lastvisit}}</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<footer class="footer" ng-include="'/assets/admin/views/common/footer.html'"></footer>
+
+</div>

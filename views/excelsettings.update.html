@@ -1,0 +1,564 @@
+<div id="header" ng-include="'/assets/admin/views/common/header.html'"></div>
+<aside id="menu" ng-include="'/assets/admin/views/common/navigation.html'"></aside>
+
+<div id="wrapper" class="animate-panel" data-effect="zomeIn">
+
+  <div class="content">
+
+	<div class="row">
+	  <div class="col-lg-12 text-center m-t-md">
+  		<h2>
+        <span translate>SETTINGS_EXCEL</span>
+  		</h2>
+	  </div>
+	</div>
+
+	<div class="row">
+	  <div class="col-lg-12">
+  		<div class="hpanel" ng-controller="ExcelsettingsUpdateCtrl">
+
+  		  <ul class="nav nav-tabs">
+    			<li ng-click="TabManager.update($event)" ng-class="{ active: TabManager.state == '#tab-description' }">
+    			  <a data-toggle="tab" href="#tab-description" aria-expanded="true">
+              <span translate>
+                DESCRIPTION
+              </span>
+            </a>
+    			</li>
+  		  </ul>
+
+  		  <div class="tab-content">
+
+    			<div id="#tab-description" class="tab-pane" ng-class="{ active: TabManager.state == '#tab-description' }">
+    			  <div class="panel-body">
+
+              <div class="well well-sm">
+                <i class="pe-7s-info"></i>
+                <span translate>
+                  EXCELSETTINGS_INFO_TEXT1
+                </span>
+              </div>
+
+      				<form class="form-horizontal">
+
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="form-group">
+                      <label for="title" class="col-sm-12 font-normal">
+                        <span translate>
+                          TITLE
+                        </span>
+                      </label>
+                      <div class="col-sm-12">
+                        <input type="text" class="form-control" id="title"
+                        ng-trim="false"
+                        ng-model="Validation.title.value"
+                        ng-change="Validation.title.validate()">
+
+                        <span class="help-block m-b-none text-danger"
+                        ng-show="!!Validation.title.invalidMsg"
+                        ng-bind="Validation.title.invalidMsg">
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <label for="supplier" class="col-sm-12 font-normal">
+                        <span translate>
+                          EXCELSETTINGS_SUPPLIER
+                        </span>
+                      </label>
+                      <div class="col-sm-12">
+                        <ui-select 
+                        ng-model="Validation.supplier.value" 
+                        ng-change="Validation.supplier.validate()"
+                        ng-disabled="Validation.supplier.disabled"
+                        theme="bootstrap">
+                          
+                          <ui-select-match placeholder="">
+                            {{$select.selected.title}}
+                          </ui-select-match>
+                          
+                          <ui-select-choices repeat="supplier in select.suppliers | propsFilter: {title: $select.search}">
+                            <div ng-bind-html="supplier.title"></div>
+                          </ui-select-choices>
+
+                        </ui-select>
+                        <span class="help-block m-b-none text-danger"
+                        ng-show="!!Validation.supplier.invalidMsg"
+                        ng-bind="Validation.supplier.invalidMsg">
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <label for="sheetNumber" class="col-sm-12 font-normal">
+                        <span translate>
+                          EXCELSETTINGS_SHEET_NUMBER
+                        </span>
+                      </label>
+                      <div class="col-sm-12">
+                        <input type="text" class="form-control" id="sheetNumber"
+                        ng-trim="false"
+                        ng-model="Validation.sheetNumber.value"
+                        ng-change="Validation.sheetNumber.validate()">
+
+                        <span class="help-block m-b-none text-danger"
+                        ng-show="!!Validation.sheetNumber.invalidMsg"
+                        ng-bind="Validation.sheetNumber.invalidMsg">
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="hr-line-dashed"></div>
+
+                <div class="row">
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <label for="titleColumn" class="col-sm-12 font-normal">
+                        <span translate>
+                          EXCELSETTINGS_TITLE_COLUMN
+                        </span>
+                      </label>
+                      <div class="col-sm-12">
+                        <input type="text" class="form-control" id="titleColumn"
+                        ng-trim="false"
+                        ng-model="Validation.titleColumn.value"
+                        ng-change="Validation.titleColumn.validate()">
+
+                        <span class="help-block m-b-none text-danger"
+                        ng-show="!!Validation.titleColumn.invalidMsg"
+                        ng-bind="Validation.titleColumn.invalidMsg">
+                        </span>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="amountColumn" class="col-sm-12 font-normal">
+                        <span translate>
+                          EXCELSETTINGS_AMOUNT_COLUMN
+                        </span>
+                      </label>
+                      <div class="col-sm-12">
+                        <input type="text" class="form-control" id="amountColumn"
+                        ng-trim="false"
+                        ng-model="Validation.amountColumn.value"
+                        ng-change="Validation.amountColumn.validate()">
+
+                        <span class="help-block m-b-none text-danger"
+                        ng-show="!!Validation.amountColumn.invalidMsg"
+                        ng-bind="Validation.amountColumn.invalidMsg">
+                        </span>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="partnumberColumn" class="col-sm-12 font-normal">
+                        <span translate>
+                          EXCELSETTINGS_PARTNUMBER_COLUMN
+                        </span>
+                      </label>
+                      <div class="col-sm-12">
+                        <input type="text" class="form-control" id="partnumberColumn"
+                        ng-trim="false"
+                        ng-model="Validation.partnumberColumn.value"
+                        ng-change="Validation.partnumberColumn.validate()">
+
+                        <span class="help-block m-b-none text-danger"
+                        ng-show="!!Validation.partnumberColumn.invalidMsg"
+                        ng-bind="Validation.partnumberColumn.invalidMsg">
+                        </span>
+                      </div>
+                    </div>
+                    
+                    <div class="form-group">
+                      <label for="brandColumn" class="col-sm-12 font-normal">
+                        <span translate>
+                          EXCELSETTINGS_BRAND_COLUMN
+                        </span>
+                      </label>
+                      <div class="col-sm-12">
+                        <input type="text" class="form-control" id="brandColumn"
+                        ng-trim="false"
+                        ng-model="Validation.brandColumn.value"
+                        ng-change="Validation.brandColumn.validate()">
+
+                        <span class="help-block m-b-none text-danger"
+                        ng-show="!!Validation.brandColumn.invalidMsg"
+                        ng-bind="Validation.brandColumn.invalidMsg">
+                        </span>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="descriptionColumn" class="col-sm-12 font-normal">
+                        <span translate>
+                          EXCELSETTINGS_DESCRIPTION_COLUMN
+                        </span>
+                      </label>
+                      <div class="col-sm-12">
+                        <input type="text" class="form-control" id="descriptionColumn"
+                        ng-trim="false"
+                        ng-model="Validation.descriptionColumn.value"
+                        ng-change="Validation.descriptionColumn.validate()">
+
+                        <span class="help-block m-b-none text-danger"
+                        ng-show="!!Validation.descriptionColumn.invalidMsg"
+                        ng-bind="Validation.descriptionColumn.invalidMsg">
+                        </span>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="modelColumn" class="col-sm-12 font-normal">
+                        <span translate>
+                          EXCELSETTINGS_MODEL_COLUMN
+                        </span>
+                      </label>
+                      <div class="col-sm-12">
+                        <input type="text" class="form-control" id="modelColumn"
+                        ng-trim="false"
+                        ng-model="Validation.modelColumn.value"
+                        ng-change="Validation.modelColumn.validate()">
+
+                        <span class="help-block m-b-none text-danger"
+                        ng-show="!!Validation.modelColumn.invalidMsg"
+                        ng-bind="Validation.modelColumn.invalidMsg">
+                        </span>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="categoryColumns" class="col-sm-12 font-normal">
+                        <span translate>
+                          EXCELSETTINGS_CATEGORY_COLUMNS
+                        </span>
+                      </label>
+                      <div class="col-sm-12">
+                        <input type="text" class="form-control" id="categoryColumns"
+                        ng-trim="false"
+                        ng-model="Validation.categoryColumns.value"
+                        ng-change="Validation.categoryColumns.validate()">
+
+                        <span class="help-block m-b-none text-danger"
+                        ng-show="!!Validation.categoryColumns.invalidMsg"
+                        ng-bind="Validation.categoryColumns.invalidMsg">
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <label for="costColumn" class="col-sm-12 font-normal">
+                        <span translate>
+                          EXCELSETTINGS_COST_COLUMN
+                        </span>
+                      </label>
+                      <div class="col-sm-12">
+                        <input type="text" class="form-control" id="costColumn"
+                        ng-trim="false"
+                        ng-model="Validation.costColumn.value"
+                        ng-change="Validation.costColumn.validate()">
+
+                        <span class="help-block m-b-none text-danger"
+                        ng-show="!!Validation.costColumn.invalidMsg"
+                        ng-bind="Validation.costColumn.invalidMsg">
+                        </span>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="costRrzColumn" class="col-sm-12 font-normal">
+                        <span translate>
+                          EXCELSETTINGS_COST_RRZ_COLUMN
+                        </span>
+                      </label>
+                      <div class="col-sm-12">
+                        <input type="text" class="form-control" id="costRrzColumn"
+                        ng-trim="false"
+                        ng-model="Validation.costRrzColumn.value"
+                        ng-change="Validation.costRrzColumn.validate()">
+
+                        <span class="help-block m-b-none text-danger"
+                        ng-show="!!Validation.costRrzColumn.invalidMsg"
+                        ng-bind="Validation.costRrzColumn.invalidMsg">
+                        </span>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="warrantyColumn" class="col-sm-12 font-normal">
+                        <span translate>
+                          EXCELSETTINGS_WARRANTY_COLUMN
+                        </span>
+                      </label>
+                      <div class="col-sm-12">
+                        <input type="text" class="form-control" id="warrantyColumn"
+                        ng-trim="false"
+                        ng-model="Validation.warrantyColumn.value"
+                        ng-change="Validation.warrantyColumn.validate()">
+
+                        <span class="help-block m-b-none text-danger"
+                        ng-show="!!Validation.warrantyColumn.invalidMsg"
+                        ng-bind="Validation.warrantyColumn.invalidMsg">
+                        </span>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="goodidSupplierColumn" class="col-sm-12 font-normal">
+                        <span translate>
+                         EXCELSETTINGS_GOODID_SUPPLIER_COLUMN
+                        </span>
+                      </label>
+                      <div class="col-sm-12">
+                        <input type="text" class="form-control" id="goodidSupplierColumn"
+                        ng-trim="false"
+                        ng-model="Validation.goodidSupplierColumn.value"
+                        ng-change="Validation.goodidSupplierColumn.validate()">
+
+                        <span class="help-block m-b-none text-danger"
+                        ng-show="!!Validation.goodidSupplierColumn.invalidMsg"
+                        ng-bind="Validation.goodidSupplierColumn.invalidMsg">
+                        </span>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="imageUrlColumn" class="col-sm-12 font-normal">
+                        <span translate>
+                          EXCELSETTINGS_IMAGE_URL_COLUMN
+                        </span>
+                      </label>
+                      <div class="col-sm-12">
+                        <input type="text" class="form-control" id="imageUrlColumn"
+                        ng-trim="false"
+                        ng-model="Validation.imageUrlColumn.value"
+                        ng-change="Validation.imageUrlColumn.validate()">
+
+                        <span class="help-block m-b-none text-danger"
+                        ng-show="!!Validation.imageUrlColumn.invalidMsg"
+                        ng-bind="Validation.imageUrlColumn.invalidMsg">
+                        </span>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="currencySignColumn" class="col-sm-12 font-normal">
+                        <span translate>
+                          EXCELSETTINGS_CURRENCY_SIGN_COLUMN
+                        </span>
+                      </label>
+                      <div class="col-sm-12">
+                        <input type="text" class="form-control" id="currencySignColumn"
+                        ng-trim="false"
+                        ng-model="Validation.currencySignColumn.value"
+                        ng-change="Validation.currencySignColumn.validate()">
+
+                        <span class="help-block m-b-none text-danger"
+                        ng-show="!!Validation.currencySignColumn.invalidMsg"
+                        ng-bind="Validation.currencySignColumn.invalidMsg">
+                        </span>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <div class="col-sm-12">&nbsp;</div>
+                      <div class="col-sm-12">
+                        <div class="checkbox">
+                          <input type="checkbox" id="warrantyInMonths" ng-model="Validation.warrantyInMonths.value">
+                          <label for="warrantyInMonths">
+                            <span translate>
+                              EXCELSETTINGS_WARRANTY_IN_MONTHS
+                            </span>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="hr-line-dashed"></div>
+
+                <div class="row">
+
+                  <div class="col-sm-12">
+                    
+                    <h3>
+                      <span translate>
+                        EXCELSETTINGS_CURRENCY
+                      </span>
+                    </h3>
+                    
+                    <div class="hr-line-dashed"></div>
+
+                    <div class="form-group">
+                      <label for="costRrzCurrencyId" class="col-sm-12 font-normal">
+                        <span translate>
+                          EXCELSETTINGS_COST_RRZ_CURRENCY_ID
+                        </span>
+                      </label>
+                      <div class="col-sm-12">
+                        <ui-select 
+                        ng-model="Validation.costRrzCurrencyId.value"
+                        ng-change="Validation.costRrzCurrencyId.validate()"
+                        ng-disabled="Validation.costRrzCurrencyId.disabled"
+                        theme="bootstrap">
+                          <ui-select-match placeholder="">
+                            {{$select.selected.title}}
+                          </ui-select-match>
+                          <ui-select-choices repeat="costRrzCurrency in select.costRrzCurrencies | propsFilter: {title: $select.search}">
+                            <div ng-bind-html="costRrzCurrency.title"></div>
+                          </ui-select-choices>
+                        </ui-select>
+                        <span class="help-block m-b-none text-danger"
+                        ng-show="!!Validation.costRrzCurrencyId.invalidMsg"
+                        ng-bind="Validation.costRrzCurrencyId.invalidMsg">
+                        </span>
+                      </div>
+                    </div>
+
+                    <div class="hr-line-dashed"></div>
+
+                    <p>
+                      <span translate>
+                        EXCELSETTINGS_CURRENCY_TEXT
+                      </span>
+                    </p>
+
+                  </div>
+
+                  <div class="col-sm-5">
+                    <div class="form-group">
+                      <label for="costCurrencyId" class="col-sm-12 font-normal">
+                        <span translate>
+                          EXCELSETTINGS_COST_CURRENCY_ID
+                        </span>
+                      </label>
+                      <div class="col-sm-12">
+                        <ui-select 
+                        ng-model="Validation.costCurrencyId.value"
+                        ng-change="Validation.costCurrencyId.validate()"
+                        ng-disabled="Validation.costCurrencyId.disabled"
+                        theme="bootstrap">
+                          <ui-select-match placeholder="">
+                            {{$select.selected.title}}
+                          </ui-select-match>
+                          <ui-select-choices repeat="currency in select.currencies | propsFilter: {title: $select.search}">
+                            <div ng-bind-html="currency.title"></div>
+                          </ui-select-choices>
+                        </ui-select>
+                        <span class="help-block m-b-none text-danger"
+                        ng-show="!!Validation.costCurrencyId.invalidMsg"
+                        ng-bind="Validation.costCurrencyId.invalidMsg">
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-4">
+                    <div class="form-group">
+                      <label for="currencySign" class="col-sm-12 font-normal">
+                        <span translate>
+                          EXCELSETTINGS_CURRENCY_SIGN
+                        </span>
+                      </label>
+                      <div class="col-sm-12">
+                        <input type="text" class="form-control" id="currencySign"
+                        ng-trim="false"
+                        ng-model="Validation.currencySign.value">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="form-group">
+                      <label for="costCurrencySign" class="col-sm-12 font-normal">
+                        &nbsp;
+                      </label>
+                      <div class="col-sm-12">
+                        <button type="button" class="btn btn-default"
+                        ng-disabled="Validation.currencySign.disabled()"
+                        ng-click="ExcelsettingsUpdateManager.add()">
+                          <span translate>
+                            ADD
+                          </span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-sm-12">
+                    <div ng-show="currencyMaps.length > 0">
+                      <span translate>
+                        EXCELSETTINGS_CURRENCY_MAPS
+                      </span>
+                      <div class="table-responsive project-list">
+                        <table class="table table-striped">
+                          <thead>
+                            <tr>
+                              <th><div class="stats-title pull-left"><h4><span translate>EXCELSETTINGS_CURRENCY</span></h4></div></th>
+                              <th><div class="stats-title pull-left"><h4><span translate>EXCELSETTINGS_SIGN</span></h4></div></th>
+                              <th><div class="stats-title pull-left"><h4><span translate>EXCELSETTINGS_ACTION</span></h4></div></th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr ng-repeat="currencyMap in currencyMaps">
+                              <td>
+                                {{currencyMap.title}}
+                              </td>
+                              <td>
+                                {{currencyMap.sign}}
+                              </td>
+                              <td>
+                                <button class="btn btn-default btn-sm" type="button" ng-click="ExcelsettingsUpdateManager.delete(currencyMap.id)">
+                                  <i class="glyphicon glyphicon-trash"></i>
+                                  <span class="bold" translate>
+                                    DELETE
+                                  </span>
+                                </button>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="hr-line-dashed"></div>
+
+                <div class="col-sm-6">
+      				    <div class="form-group">
+        					  <button type="button" class="btn btn-default"
+                    ng-disabled="Validation.save.disabled()"
+        						ng-click="ExcelsettingsUpdateManager.save()">
+                      <span translate>
+                        SAVE
+                      </span>
+                    </button>
+                    <button type="button" class="btn btn-default"
+                    ng-click="ExcelsettingsUpdateManager.cancel()">
+                      <span translate>
+                        CANCEL
+                      </span>
+                    </button>
+        					</div>
+                </div>
+
+      				</form>
+
+    			  </div>
+    			</div>
+    		</div>
+  	  </div>
+  	</div>
+  </div>
+
+  <footer class="footer" ng-include="'/assets/admin/views/common/footer.html'"></footer>
+
+</div>
