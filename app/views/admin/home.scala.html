@@ -1,0 +1,210 @@
+@(adminName: String, siteName: String = "")
+<!DOCTYPE html>
+<html ng-app="homer">
+	<head>
+		<meta charset="UTF-8">
+
+		<!-- Force latest IE rendering engine or ChromeFrame if installed -->
+		<!--[if IE]>
+		<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1'>
+		<![endif]-->
+
+		<meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta name='application-name' content='Welcome home'>
+		<title>Loading...</title>
+
+		<!--https://github.com/angular/angular.js/issues/11091#issuecomment-149918116-->
+		<base href="/">
+
+		<link type="text/css" rel="stylesheet" href="@routes.Assets.versioned("admin/bower_components/bootstrap/dist/css/bootstrap.css")" />
+		<link type="text/css" rel="stylesheet" href="@routes.Assets.versioned("admin/bower_components/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css")" />
+		<link type="text/css" rel="stylesheet" href="@routes.Assets.versioned("admin/bower_components/fontawesome/css/font-awesome.css")" />
+		<link type="text/css" rel="stylesheet" href="@routes.Assets.versioned("admin/bower_components/sweetalert/lib/sweet-alert.css")" />
+		<link type="text/css" rel="stylesheet" href="@routes.Assets.versioned("admin/bower_components/summernote/dist/summernote.css")" />
+		<link type="text/css" rel="stylesheet" href="@routes.Assets.versioned("admin/bower_components/animate.css/animate.css")" />
+		<link type="text/css" rel="stylesheet" href="@routes.Assets.versioned("admin/bower_components/ui-select/dist/select.min.css")" />
+		<link type="text/css" rel="stylesheet" href="@routes.Assets.versioned("admin/fonts/pe-icon-7-stroke/css/pe-icon-7-stroke.css")" />
+		<link type="text/css" rel="stylesheet" href="@routes.Assets.versioned("admin/fonts/pe-icon-7-stroke/css/helper.css")" />
+		<link type="text/css" rel="stylesheet" href="@routes.Assets.versioned("admin/bower_components/blueimp-file-uploader/css/blueimp-gallery.min.css")" />
+		<link type="text/css" rel="stylesheet" href="@routes.Assets.versioned("admin/bower_components/blueimp-file-uploader/css/jquery.fileupload.css")" />
+		<link type="text/css" rel="stylesheet" href="@routes.Assets.versioned("admin/bower_components/blueimp-file-uploader/css/jquery.fileupload-ui.css")" />
+		<link type="text/css" rel="stylesheet" href="@routes.Assets.versioned("admin/bower_components/datatables_plugins/integration/bootstrap/3/dataTables.bootstrap.css")" />
+		<link type="text/css" rel="stylesheet" href="@routes.Assets.versioned("admin/bower_components/angular-color-picker/angularjs-color-picker.min.css")" />
+		<link type="text/css" rel="stylesheet" href="@routes.Assets.versioned("admin/bower_components/angular-bootstrap-colorpicker/css/colorpicker.css")" />
+		<link type="text/css" rel="stylesheet" href="@routes.Assets.versioned("admin/bower_components/angular-datatables/dist/plugins/select/select.dataTables.css")" />
+		<link type="text/css" rel="stylesheet" href="@routes.Assets.versioned("admin/styles/style.css")" />
+
+		<noscript>
+			<link type="text/css" rel="stylesheet" href="@routes.Assets.versioned("admin/bower_components/blueimp-file-uploader/css/jquery.fileupload-noscript.css")" />
+		</noscript>
+		<noscript>
+			<link type="text/css" rel="stylesheet" href="@routes.Assets.versioned("admin/bower_components/blueimp-file-uploader/css/jquery.fileupload-ui-noscript.css")" />
+		</noscript>
+
+		<style>/* Hide Angular JS elements before initializing */.ng-cloak{display: none}</style>
+
+	</head>
+
+	<body ng-controller="myTranslator">
+
+		<div ui-view>
+			<!-- Application Loader -->
+			<div class="splash">
+				<div class="color-line"></div>
+				<div class="splash-title">
+					<!--
+					<h1>
+						<span translate>ADMIN_SPINNER_TEXT</span>
+					</h1>
+					<p>
+						<span translate>ADMIN_SPINNER_VERSION_TEXT</span>
+						<strong>
+							<span translate>
+								ADMIN_SPINNER_VERSION
+							</span>
+						</strong>
+					</p>
+					-->
+					<h1>
+						Административная панель
+					</h1>
+					<p>
+						Версия <strong>1.5 beta</strong>
+					</p>
+					<svg width='80px' height='80px' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" class="uil-default"><rect x="0" y="0" width="100" height="100" fill="none" class="bk"></rect><rect  x='46.5' y='40' width='7' height='20' rx='5' ry='5' fill='#00b2ff' transform='rotate(0 50 50) translate(0 -30)'>  <animate attributeName='opacity' from='1' to='0' dur='0.75s' begin='0s' repeatCount='indefinite'/></rect><rect  x='46.5' y='40' width='7' height='20' rx='5' ry='5' fill='#00b2ff' transform='rotate(30 50 50) translate(0 -30)'>  <animate attributeName='opacity' from='1' to='0' dur='0.75s' begin='0.0625s' repeatCount='indefinite'/></rect><rect  x='46.5' y='40' width='7' height='20' rx='5' ry='5' fill='#00b2ff' transform='rotate(60 50 50) translate(0 -30)'>  <animate attributeName='opacity' from='1' to='0' dur='0.75s' begin='0.125s' repeatCount='indefinite'/></rect><rect  x='46.5' y='40' width='7' height='20' rx='5' ry='5' fill='#00b2ff' transform='rotate(90 50 50) translate(0 -30)'>  <animate attributeName='opacity' from='1' to='0' dur='0.75s' begin='0.1875s' repeatCount='indefinite'/></rect><rect  x='46.5' y='40' width='7' height='20' rx='5' ry='5' fill='#00b2ff' transform='rotate(120 50 50) translate(0 -30)'>  <animate attributeName='opacity' from='1' to='0' dur='0.75s' begin='0.25s' repeatCount='indefinite'/></rect><rect  x='46.5' y='40' width='7' height='20' rx='5' ry='5' fill='#00b2ff' transform='rotate(150 50 50) translate(0 -30)'>  <animate attributeName='opacity' from='1' to='0' dur='0.75s' begin='0.3125s' repeatCount='indefinite'/></rect><rect  x='46.5' y='40' width='7' height='20' rx='5' ry='5' fill='#00b2ff' transform='rotate(180 50 50) translate(0 -30)'>  <animate attributeName='opacity' from='1' to='0' dur='0.75s' begin='0.375s' repeatCount='indefinite'/></rect><rect  x='46.5' y='40' width='7' height='20' rx='5' ry='5' fill='#00b2ff' transform='rotate(210 50 50) translate(0 -30)'>  <animate attributeName='opacity' from='1' to='0' dur='0.75s' begin='0.4375s' repeatCount='indefinite'/></rect><rect  x='46.5' y='40' width='7' height='20' rx='5' ry='5' fill='#00b2ff' transform='rotate(240 50 50) translate(0 -30)'>  <animate attributeName='opacity' from='1' to='0' dur='0.75s' begin='0.5s' repeatCount='indefinite'/></rect><rect  x='46.5' y='40' width='7' height='20' rx='5' ry='5' fill='#00b2ff' transform='rotate(270 50 50) translate(0 -30)'>  <animate attributeName='opacity' from='1' to='0' dur='0.75s' begin='0.5625s' repeatCount='indefinite'/></rect><rect  x='46.5' y='40' width='7' height='20' rx='5' ry='5' fill='#00b2ff' transform='rotate(300 50 50) translate(0 -30)'>  <animate attributeName='opacity' from='1' to='0' dur='0.75s' begin='0.625s' repeatCount='indefinite'/></rect><rect  x='46.5' y='40' width='7' height='20' rx='5' ry='5' fill='#00b2ff' transform='rotate(330 50 50) translate(0 -30)'>  <animate attributeName='opacity' from='1' to='0' dur='0.75s' begin='0.6875s' repeatCount='indefinite'/></rect></svg>
+				</div>
+			</div>
+		</div>
+
+		<!-- Ajax Loader -->
+		<div class="spinner">
+			<div class="spinner-bg"></div>
+			<div class="spinner-loader">
+				<div class="bounce1"></div>
+				<div class="bounce2"></div>
+				<div class="bounce3"></div>
+			</div>
+		</div>
+
+		<!-- The blueimp Gallery widget -->
+		<div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls" data-filter=":even">
+			<div class="slides"></div>
+			<h3 class="title"></h3>
+			<a class="prev">‹</a>
+			<a class="next">›</a>
+			<a class="close">×</a>
+			<a class="play-pause"></a>
+			<ol class="indicator"></ol>
+		</div>
+
+		<script type="text/javascript" src="@routes.Assets.versioned("admin/bower_components/es5-shim/es5-shim.min.js")"></script>
+		<script type="text/javascript" src="@routes.Assets.versioned("admin/bower_components/jquery/dist/jquery.min.js")"></script>
+		<script type="text/javascript" src="@routes.Assets.versioned("admin/bower_components/angular/angular.min.js")"></script>
+		<script type="text/javascript" src="@routes.Assets.versioned("admin/bower_components/datatables/media/js/jquery.dataTables.min.js")"></script>
+		<script type="text/javascript" src="@routes.Assets.versioned("admin/bower_components/datatables_plugins/integration/bootstrap/3/dataTables.bootstrap.min.js")"></script>
+		<script type="text/javascript" src="@routes.Assets.versioned("admin/bower_components/datatables_plugins/datatables-select/js/dataTables.select.min.js")"></script>
+		<script type="text/javascript" src="@routes.Assets.versioned("admin/bower_components/datatables_plugins/api/fnSetFilteringDelay.js")"></script>
+		<script type="text/javascript" src="@routes.Assets.versioned("admin/bower_components/angular-datatables/dist/angular-datatables.min.js")"></script>
+		<script type="text/javascript" src="@routes.Assets.versioned("admin/bower_components/angular-datatables/dist/plugins/select/angular-datatables.select.min.js")"></script>
+		<script type="text/javascript" src="@routes.Assets.versioned("admin/bower_components/angular-ui-router/release/angular-ui-router.min.js")"></script>
+		<script type="text/javascript" src="@routes.Assets.versioned("admin/bower_components/angular-animate/angular-animate.min.js")"></script>
+		<script type="text/javascript" src="@routes.Assets.versioned("admin/bower_components/bootstrap/dist/js/bootstrap.min.js")"></script>
+		<script type="text/javascript" src="@routes.Assets.versioned("admin/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js")"></script>
+		<script type="text/javascript" src="@routes.Assets.versioned("admin/bower_components/sweetalert/lib/sweet-alert.min.js")"></script>
+		<script type="text/javascript" src="@routes.Assets.versioned("admin/bower_components/summernote/dist/summernote.min.js")"></script>
+		<script type="text/javascript" src="@routes.Assets.versioned("admin/bower_components/angular-summernote/dist/angular-summernote.min.js")"></script>
+		<script type="text/javascript" src="@routes.Assets.versioned("admin/bower_components/summernote/lang/summernote-ru-RU.js")"></script>
+
+		<script type="text/javascript" src="@routes.Assets.versioned("admin/bower_components/ui-select/dist/select.min.js")"></script>
+
+		<script type="text/javascript" src="@routes.Assets.versioned("admin/bower_components/blueimp-file-uploader/js/vendor/jquery.ui.widget.js")"></script>
+		<script type="text/javascript" src="@routes.Assets.versioned("admin/bower_components/blueimp-file-uploader/js/load-image.all.min.js")"></script>
+		<script type="text/javascript" src="@routes.Assets.versioned("admin/bower_components/blueimp-file-uploader/js/canvas-to-blob.min.js")"></script>
+		<script type="text/javascript" src="@routes.Assets.versioned("admin/bower_components/blueimp-file-uploader/js/jquery.blueimp-gallery.min.js")"></script>
+		<script type="text/javascript" src="@routes.Assets.versioned("admin/bower_components/blueimp-file-uploader/js/jquery.iframe-transport.js")"></script>
+		<script type="text/javascript" src="@routes.Assets.versioned("admin/bower_components/blueimp-file-uploader/js/jquery.fileupload.js")"></script>
+		<script type="text/javascript" src="@routes.Assets.versioned("admin/bower_components/blueimp-file-uploader/js/jquery.fileupload-process.js")"></script>
+		<script type="text/javascript" src="@routes.Assets.versioned("admin/bower_components/blueimp-file-uploader/js/jquery.fileupload-image.js")"></script>
+		<script type="text/javascript" src="@routes.Assets.versioned("admin/bower_components/blueimp-file-uploader/js/jquery.fileupload-audio.js")"></script>
+		<script type="text/javascript" src="@routes.Assets.versioned("admin/bower_components/blueimp-file-uploader/js/jquery.fileupload-video.js")"></script>
+		<script type="text/javascript" src="@routes.Assets.versioned("admin/bower_components/blueimp-file-uploader/js/jquery.fileupload-validate.js")"></script>
+		<script type="text/javascript" src="@routes.Assets.versioned("admin/bower_components/blueimp-file-uploader/js/jquery.fileupload-angular.js")"></script>
+
+		<script type="text/javascript" src="@routes.Assets.versioned("admin/bower_components/angular-translate/angular-translate.min.js")"></script>
+		<script type="text/javascript" src="@routes.Assets.versioned("admin/bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.min.js")"></script>
+		<script type="text/javascript" src="@routes.Assets.versioned("admin/bower_components/angular-sanitize/angular-sanitize.min.js")"></script>
+
+		<script type="text/javascript" src="@routes.Assets.versioned("admin/bower_components/angular-bootstrap-colorpicker/js/bootstrap-colorpicker-module.min.js")"></script>
+
+		<script type="text/javascript" src="@routes.Assets.versioned("admin/bower_components/ng-file-upload/dist/ng-file-upload.min.js")"></script>
+		<script type="text/javascript" src="@routes.Assets.versioned("admin/bower_components/ng-file-upload/dist/ng-file-upload-shim.min.js")"></script>
+
+		<script type="text/javascript" src="@routes.Assets.versioned("admin/scripts/homer.js")"></script>
+		<script type="text/javascript" src="@routes.Assets.versioned("admin/scripts/app.js")"></script>
+		<script type="text/javascript" src="@routes.Assets.versioned("admin/scripts/constants/actionToUrlMask.js")"></script>
+		<script type="text/javascript" src="@routes.Assets.versioned("admin/scripts/config.js")"></script>
+
+		<script type="text/javascript" src="@routes.Assets.versioned("admin/scripts/filters/props.js")"></script>
+		<script type="text/javascript" src="@routes.Assets.versioned("admin/scripts/filters/capitalize.js")"></script>
+
+		<script type="text/javascript" src="@routes.Assets.versioned("admin/scripts/factories/upload.js")"></script>
+		<script type="text/javascript" src="@routes.Assets.versioned("admin/scripts/factories/fileReader.js")"></script>
+
+		<script type="text/javascript" src="@routes.Assets.versioned("admin/scripts/controllers/SuppliersCtrl.js")"></script>
+		<script type="text/javascript" src="@routes.Assets.versioned("admin/scripts/controllers/SuppliersUpdateCtrl.js")"></script>
+
+		<script type="text/javascript" src="@routes.Assets.versioned("admin/scripts/controllers/AdminsCtrl.js")"></script>
+		<script type="text/javascript" src="@routes.Assets.versioned("admin/scripts/controllers/AdminsUpdateCtrl.js")"></script>
+
+		<script type="text/javascript" src="@routes.Assets.versioned("admin/scripts/controllers/OrderStatusesCtrl.js")"></script>
+		<script type="text/javascript" src="@routes.Assets.versioned("admin/scripts/controllers/OrderStatusesUpdateCtrl.js")"></script>
+
+		<script type="text/javascript" src="@routes.Assets.versioned("admin/scripts/controllers/OrderstatusmessagesCtrl.js")"></script>
+		<script type="text/javascript" src="@routes.Assets.versioned("admin/scripts/controllers/OrderstatusmessagesUpdateCtrl.js")"></script>
+
+		<script type="text/javascript" src="@routes.Assets.versioned("admin/scripts/controllers/NewsCtrl.js")"></script>
+		<script type="text/javascript" src="@routes.Assets.versioned("admin/scripts/controllers/NewsUpdateCtrl.js")"></script>
+		<script type="text/javascript" src="@routes.Assets.versioned("admin/scripts/controllers/NewsFileUploadCtrl.js")"></script>
+		<script type="text/javascript" src="@routes.Assets.versioned("admin/scripts/controllers/NewsFileDestroyCtrl.js")"></script>
+
+		<script type="text/javascript" src="@routes.Assets.versioned("admin/scripts/controllers/RawgoodsCtrl.js")"></script>
+		<script type="text/javascript" src="@routes.Assets.versioned("admin/scripts/controllers/CustomersCtrl.js")"></script>
+
+		<script type="text/javascript" src="@routes.Assets.versioned("admin/scripts/controllers/CurrenciesCtrl.js")"></script>
+		<script type="text/javascript" src="@routes.Assets.versioned("admin/scripts/controllers/CurrenciesUpdateCtrl.js")"></script>
+
+		<script type="text/javascript" src="@routes.Assets.versioned("admin/scripts/controllers/SettingsCtrl.js")"></script>
+		<script type="text/javascript" src="@routes.Assets.versioned("admin/scripts/controllers/SettingsUpdateCtrl.js")"></script>
+
+		<script type="text/javascript" src="@routes.Assets.versioned("admin/scripts/controllers/ExcelsettingsCtrl.js")"></script>
+		<script type="text/javascript" src="@routes.Assets.versioned("admin/scripts/controllers/ExcelsettingsUpdateCtrl.js")"></script>
+
+		<script type="text/javascript" src="@routes.Assets.versioned("admin/scripts/controllers/CategoryUpdateCtrl.js")"></script>
+		<script type="text/javascript" src="@routes.Assets.versioned("admin/scripts/controllers/CategoriesCtrl.js")"></script>
+		<script type="text/javascript" src="@routes.Assets.versioned("admin/scripts/controllers/CategoryFU1Ctrl.js")"></script>
+		<script type="text/javascript" src="@routes.Assets.versioned("admin/scripts/controllers/CategoryFU2Ctrl.js")"></script>
+		<script type="text/javascript" src="@routes.Assets.versioned("admin/scripts/controllers/CategoryFDCtrl.js")"></script>
+
+		<script type="text/javascript" src="@routes.Assets.versioned("admin/scripts/controllers/SubcategoriesCtrl.js")"></script>
+
+		<script type="text/javascript" src="@routes.Assets.versioned("admin/scripts/controllers/GoodUpdateCtrl.js")"></script>
+		<script type="text/javascript" src="@routes.Assets.versioned("admin/scripts/controllers/GoodsCtrl.js")"></script>
+		<script type="text/javascript" src="@routes.Assets.versioned("admin/scripts/controllers/GoodFileUploadCtrl.js")"></script>
+		<script type="text/javascript" src="@routes.Assets.versioned("admin/scripts/controllers/GoodFileDestroyCtrl.js")"></script>
+
+		<script type="text/javascript" src="@routes.Assets.versioned("admin/scripts/controllers/CostscalesCtrl.js")"></script>
+
+		<script type="text/javascript" src="@routes.Assets.versioned("admin/scripts/controllers/ManufacturersCtrl.js")"></script>
+		<script type="text/javascript" src="@routes.Assets.versioned("admin/scripts/controllers/ManufacturerUpdateCtrl.js")"></script>
+
+		<script type="text/javascript" src="@routes.Assets.versioned("admin/scripts/controllers/SalesCtrl.js")"></script>
+		<script type="text/javascript" src="@routes.Assets.versioned("admin/scripts/controllers/SaleUpdateCtrl.js")"></script>
+
+		<script type="text/javascript" src="@routes.Assets.versioned("admin/scripts/controllers/SlidesCtrl.js")"></script>
+		<script type="text/javascript" src="@routes.Assets.versioned("admin/scripts/controllers/SlideUpdateCtrl.js")"></script>
+
+		<script type="text/javascript" src="@routes.Assets.versioned("admin/scripts/controllers/PricesCtrl.js")"></script>
+
+		<script type="text/javascript" src="@routes.Assets.versioned("admin/scripts/controllers/multi_language_support.js")"></script>
+	</body>
+</html>

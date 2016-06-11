@@ -1,0 +1,13 @@
+@(cats: List[Category], lang: Language)
+@rows = @{cats.grouped(5).toList}
+@if(cats.nonEmpty){
+    <section class="items">
+    @for(row <- rows){
+        <div class="row">
+        @for(cat <- row){
+            <div class="col-sm-15 col-md-15 col-lg-15"><a href="@controllers.routes.Application.cat(lang.cod, cat.slug)" class="item-cat">@{cat.catpicture.map(data => Html(s"""<img src="${controllers.routes.Categories.thumb(cat.id)}" />"""")).getOrElse("")}<p>@cat.textByLang(lang.id)</p></a></div>
+        }
+        </div>
+    }
+    </section>
+}

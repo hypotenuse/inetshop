@@ -1,0 +1,96 @@
+@import play.filters.csrf.CSRF.Token
+@import formvalidators.AdminValidator
+@(adminForm: Form[AdminValidator])(implicit messages: Messages, token: Token)
+
+<!DOCTYPE html>
+    <html>
+        <head>
+
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+                <!-- Page title -->
+            <title>Tovarovoz | @messages("form.button.enter")</title>
+
+                <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+                <!--<link rel="shortcut icon" type="image/ico" href="favicon.ico" />-->
+
+                <!-- Vendor styles -->
+            <link rel="stylesheet" href="@routes.Assets.versioned("login/styles/font-awesome.css")" />
+            <link rel="stylesheet" href="@routes.Assets.versioned("login/styles/metisMenu.css")" />
+            <link rel="stylesheet" href="@routes.Assets.versioned("login/styles/animate.css")" />
+            <link rel="stylesheet" href="@routes.Assets.versioned("login/styles/bootstrap.css")" />
+
+                <!-- App styles -->
+            <link rel="stylesheet" href="@routes.Assets.versioned("login/fonts/pe-icon-7-stroke/css/pe-icon-7-stroke.css")" />
+            <link rel="stylesheet" href="@routes.Assets.versioned("login/fonts/pe-icon-7-stroke/css/helper.css")" />
+            <link rel="stylesheet" href="@routes.Assets.versioned("login/styles/style.css")">
+            <link rel="stylesheet" href="@routes.Assets.versioned("login/styles/custom.css")">
+            <link rel="stylesheet" href="@routes.Assets.versioned("login/styles/static_custom.css")">
+
+        </head>
+        <body class="blank">
+
+                <!-- Simple splash screen-->
+            <div class="splash"> <div class="color-line"></div><div class="splash-title"><h1>@messages("login.loading")</h1><p>@messages("login.loading.detail")</p><img src="@routes.Assets.versioned("images/loading-bars.svg")" width="64" height="64" /> </div> </div>
+                <!--[if lt IE 7]>
+<p class="alert alert-danger">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+<![endif]-->
+
+            <div class="color-line"></div>
+
+
+            <div class="login-container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="text-center m-b-md">
+                            <h3>@messages("admin.area.enter")</h3>
+                            @adminForm.globalError.map { error =>
+                                <small class="alert alert-danger capitalize">@error.message</small>
+                            }
+                        </div>
+                        <div class="hpanel">
+                            <div class="panel-body">
+                            @import helper._
+                            @import play.api.templates.PlayMagic.toHtmlArgs
+
+
+                            @implicitField = @{ FieldConstructor(views.html.input_helper.f) }
+                            @helper.form(action = controllers.admin.routes.Auth.login("POST")) {
+                                @input(adminForm("email")) { (id, name, value, args) =>
+                                    <input type="email" class="form-control" placeholder="@messages("email.title")" title="@messages("email.title")" required="" name="@name" id="@id" value="@value" @toHtmlArgs(args)>
+                                }
+                                @input(adminForm("password")) { (id, name, value, args) =>
+                                    <input type="password" class="form-control" placeholder="******" title="@messages("password.title")" required="" name="@name" id="@id" @toHtmlArgs(args)>
+                                }
+
+                                    @CSRF.formField
+                                    <button class="btn btn-success btn-block">@messages("form.button.enter")</button>
+                            }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        2015 Copyright <strong>Tovarovoz</strong>
+                    </div>
+                </div>
+            </div>
+
+
+                <!-- Vendor scripts -->
+            <script src="@routes.Assets.versioned("login/scripts/jquery.min.js")"></script>
+            <script src="@routes.Assets.versioned("login/scripts/bootstrap.min.js")"></script>
+            <script src="@routes.Assets.versioned("login/scripts/metisMenu.min.js")"></script>
+            <script src="@routes.Assets.versioned("login/scripts/icheck.min.js")"></script>
+            <script src="@routes.Assets.versioned("login/scripts/index.js")"></script>
+
+                <!-- App scripts -->
+            <script src="@routes.Assets.versioned("login/scripts/homer.js")"></script>
+            @*<script src="@routes.Assets.versioned("scripts/app.js")"></script>*@
+
+        </body>
+    </html>
+

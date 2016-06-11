@@ -1,0 +1,54 @@
+@()(implicit messages: Messages)
+@import models.{Category, CategoryText}
+@texts = @{CategoryText.gebByLangCod(messages.lang.language)}
+<div class="catalog">
+    <ul class="catalog-list">
+        <li class="dropdown list-head-2 open"><a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@messages("catalog.header")</a>
+@for(cat <- Category.roots){
+    <ul class="dropdown-menu first-level">
+        <li class="dropdown"><a href="@controllers.routes.Application.cat(messages.lang.language, cat.slug)" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@{if(texts.exists(_.catid == cat.id)) texts.filter(_.catid == cat.id).head.title else cat.textByDefaultLang.get.title}</a>
+            @if(cat.hasAdvert()){
+                <div class="advertise-wrap">
+                    <span class="advertise"><img src="@cat.pictureUrl("/")" alt=""></span>
+                    <a href="" class="advertise-link"></a>
+                </div>
+                    }
+            @if(cat.children().nonEmpty){
+            <ul class="dropdown-menu second-level">
+                @for(child <- cat.children()){
+                    <li class="@{if(child.children().nonEmpty)"dropdown dropdown-submenu"}">
+                        <a @if(child.children().nonEmpty){class="dropdown-toggle" data-toggle="dropdown"} href="@controllers.routes.Application.cat(messages.lang.language, child.slug)">@{if(texts.exists(_.catid == child.id)) texts.filter(_.catid == child.id).head.title else child.textByDefaultLang.get.title}@if(child.children().nonEmpty){<span class="caret-right"></span>}</a>
+                        @if(child.children().nonEmpty){
+                            <ul class="dropdown-menu third-level">
+                            @for(child2 <- child.children()){
+                                <li><a href="@controllers.routes.Application.cat(messages.lang.language, child2.slug)">@{if(texts.exists(_.catid == child2.id)) texts.filter(_.catid == child2.id).head.title else child2.textByDefaultLang.get.title}</a></li>
+                            }
+                            </ul>
+                        }
+                    </li>
+
+                }
+            </ul>
+        }
+    </ul>
+}
+
+    </ul>
+</div>
+
+<div class="catalog-small">
+    <ul class="catalog-list panel-group">
+        @for(cat <- Category.roots){
+            <li class="panel panel-default"><a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">@{if(texts.exists(_.catid == cat.id)) texts.filter(_.catid == cat.id).head.title else cat.textByDefaultLang.get.title}</a></li>
+                    @if(cat.children().nonEmpty){
+                        <ul id="collapseOne" class="panel-collapse collapse" role="tabpanel">
+                        @for(child <- cat.children()){
+                            <li><a href="@controllers.routes.Application.cat(messages.lang.language, child.slug)">@{if(texts.exists(_.catid == child.id)) texts.filter(_.catid == child.id).head.title else child.textByDefaultLang.get.title}</a></li>
+                        }
+                        </ul>
+                    }
+        }
+    </ul>
+
+
+</div>

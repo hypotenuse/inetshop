@@ -1,0 +1,32 @@
+@import repositories.GoodFrontendAggregate
+@(cats: List[Category], leaders: List[GoodFrontendAggregate], newg: List[GoodFrontendAggregate], currLang: Language, metadescription: String, metatitle: String, news: List[models.News], bottomText: String)(implicit messages: Messages)
+@layout(metatitle, metadescription, currLang) {
+    <section id="two-column">
+        <div class="row">
+            <aside id="widget-area" class="col-sm-3">
+                @catalog_()
+                @banner_()
+                @news_(news, currLang)
+            </aside>
+            <section id="content" class="col-xs-12 col-sm-9">
+                <div class="secondary-widget-area">
+                    @search_()
+                    @cart_big_()
+                    <div style="clear:both"></div>
+                    @slider_()
+                </div>
+                    @categories_home_(cats, currLang)
+            </section>
+        </div>
+    </section>
+        @leaders_(leaders, currLang)
+        @newgoods_(newg, currLang)
+    <section class="shop-description">
+        <div class="row">
+            <div class="col-sm-12">
+                @Html(bottomText)
+            </div>
+        </div>
+
+    </section>
+}

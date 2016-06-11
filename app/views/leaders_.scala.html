@@ -1,0 +1,26 @@
+@import repositories.GoodFrontendAggregate
+@(goods: List[GoodFrontendAggregate], lang: Language)(implicit messages: Messages)
+@if(goods.nonEmpty){
+    <section class="leaders">
+        <div class="row padding">
+            <div class="section-header"><h2>@messages("leaders.title")</h2></div>
+            @for(good <- goods){
+                <div class="col-sm-2 col-xs-6 leader">
+                    <div class="large-tile">
+                        <div class="middle-tile">
+                            <div class="tile-data">
+                                <div class="tile-img"><a href="@controllers.routes.Goods.detail(lang.cod, good.slug)">@{good.picture.map(id => Html(s"""<img src="${controllers.routes.Pictures.thumb(id)}" alt="${good.title}" />"""")).getOrElse("")}</a></div>
+                                <div class="tile-title"><a href="@controllers.routes.Goods.detail(lang.cod, good.slug)">@good.title</a></div>
+                            </div>
+                            <button class="btn price"><span class="sum"><span class="cap">@good.cost</span>грн</span><span class="price-img"></span></button>
+                        </div>
+                        <div class="tile-description">
+                            <p>@good.short_desc</p>
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </div>
+    </section>
+}

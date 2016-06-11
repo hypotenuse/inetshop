@@ -1,0 +1,14 @@
+@(news: List[models.News], lang: Language)(implicit messages: Messages)
+@import services.UrlService, org.apache.commons.lang3.StringUtils
+
+@if(news.nonEmpty){
+    <div class="news-sidebar">
+        <h3>@messages("news.title")</h3>
+        <ul class="news-list">
+            @for(n <- news){
+                <li><span class="in-img"><img src="@controllers.routes.News.thumb(n.id)"></span><span class="in-link"><a href="@controllers.routes.News.detail(lang.cod, n.slug)">@StringUtils.abbreviate(n.textByLang(lang).map(t => t.title).getOrElse(""), 50) </a></span></li>
+            }
+            <li><a href="@controllers.routes.News.list(lang.cod)" class="all">@messages("news.all")...</a></li>
+        </ul>
+    </div>
+}
